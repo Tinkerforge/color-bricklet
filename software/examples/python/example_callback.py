@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-  
 
-import sys
-sys.path.append('./tinkerforge')
-
 HOST = "localhost"
 PORT = 4223
 UID = "abc" # Change to your UID
