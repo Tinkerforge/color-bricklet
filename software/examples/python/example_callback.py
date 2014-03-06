@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-  
 
-import sys
-sys.path.append('./tinkerforge')
-
 HOST = "localhost"
 PORT = 4223
 UID = "abc" # Change to your UID
@@ -28,10 +25,10 @@ if __name__ == "__main__":
     # Don't use device before ipcon is connected
     # Set Period for color callback to 1s (1000ms)
     # Note: The callback is only called every second if the 
-    #       temperature has changed since the last call!
+    #       color has changed since the last call!
     c.set_color_callback_period(1000)
 
-    # Register temperature callback to function cb_temperature
+    # Register color callback to function cb_color
     c.register_callback(c.CALLBACK_COLOR, cb_color)
     
     raw_input('Press key to exit\n') # Use input() in Python 3

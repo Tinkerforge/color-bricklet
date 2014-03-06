@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-  
 
-import sys
-sys.path.append('./tinkerforge')
-
 HOST = "localhost"
 PORT = 4223
 UID = "abc" # Change to your UID
@@ -13,7 +10,6 @@ from tinkerforge.bricklet_color import Color
 
 # Callback function for color callback (in RGBC)
 def cb_reached(r, g, b, c):
-    print('Color reached...')
     print('Color(R): ' + str(r))
     print('Color(G): ' + str(g))
     print('Color(B): ' + str(b))
