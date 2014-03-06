@@ -1,5 +1,6 @@
 /* color-bricklet
  * Copyright (C) 2014 Ishraq Ibne Ashraf <ishraq@tinkerforge.com>
+ * Copyright (C) 2014 Olaf Lüke <olaf@tinkerforge.com>
  *
  * color.c: Implementation of Color Bricklet messages
  *
@@ -60,19 +61,35 @@ void invocation(const ComType com, const uint8_t *data) {
 			light_on(com, (LightOn*)data);
 			return;
 		}
+
 		case FID_LIGHT_OFF: {
 			light_off(com, (LightOff*)data);
 			return;
 		}
+
 		case FID_IS_LIGHT_ON: {
 			is_light_on(com, (IsLightOn*)data);
 			return;
 		}
+
         case FID_SET_CONFIG: {
-            set_config(com, (Config*)data);
+            set_config(com, (SetConfig*)data);
+            return;
         }
+
         case FID_GET_CONFIG: {
             get_config(com, (GetConfig*)data);
+            return;
+        }
+
+        case FID_GET_ILLUMINANCE: {
+            get_illuminance(com, (GetIlluminance*)data);
+            return;
+        }
+
+        case FID_GET_COLOR_TEMPERATURE: {
+            get_color_temperature(com, (GetColorTemperature*)data);
+            return;
         }
     }
 
@@ -86,24 +103,23 @@ void invocation(const ComType com, const uint8_t *data) {
 void constructor(void) {
 	_Static_assert(sizeof(BrickContext) <= BRICKLET_CONTEXT_MAX_SIZE, "BrickContext too big");
 
-    //setup device
-    uint8_t enable_reg_config = (1 << 4) | (1 << 1) | (1 << 0);
-    write_register(REG_RW_ENABLE, enable_reg_config);//disabling wait
-    write_register(REG_RW_PERS, 0x00);//enabling interrupt every RGBC cycle
+    // Setup device
+    write_register(REG_RW_ENABLE, REG_ENABLE_AIEN | REG_ENABLE_AEN | REG_ENABLE_PON);
+    write_register(REG_RW_PERS, 0x00); // Enabling interrupt every RGBC cycle
 
-    //setting the interrupt pin as input
+    // Setting the interrupt pin as input
     PIN_INT.type = PIO_INPUT;
     PIN_INT.attribute = PIO_PULLUP;
     BA->PIO_Configure(&PIN_INT, 1);
     
-    //turning off the light by default
+    // Turning off the light by default
     PIN_LED.type = PIO_OUTPUT_0;
     PIN_LED.attribute = PIO_DEFAULT;
     BA->PIO_Configure(&PIN_LED, 1);
 
-    //setting up default configuration(gain, integration time)
-    BC->config_gain = 0x3;//(0b11) 60x gain
-    BC->config_integration_time = 0x00;//(0b00000000) 700ms integration time
+    // Setting up default configuration(gain, integration time)
+    BC->config_gain = REG_CONTROL_16X_GAIN;
+    BC->config_integration_time = REG_ATIME_154MS;
     write_register(REG_RW_CONTROL, BC->config_gain);
     write_register(REG_RW_ATIME, BC->config_integration_time);
 }
@@ -121,6 +137,7 @@ void tick(const uint8_t tick_type) {
             BC->value2[SIMPLE_UNIT_COLOR] = values[2];
             BC->value3[SIMPLE_UNIT_COLOR] = values[3];
             BC->value4[SIMPLE_UNIT_COLOR] = values[0];
+
             clear_interrupt();
         }
     }
@@ -140,24 +157,126 @@ void is_light_on(const ComType com, const IsLightOn *data) {
 	ilor.header        = data->header;
 	ilor.header.length = sizeof(IsLightOnReturn);
 	ilor.light         = PIN_LED.pio->PIO_PDSR & PIN_LED.mask ? 0 : 1;
+
 	BA->send_blocking_with_timeout(&ilor, sizeof(IsLightOnReturn), com);
 }
 
-void set_config(const ComType com, const Config *data) {
+void set_config(const ComType com, const SetConfig *data) {
+	if(data->gain > 3 || data->integration_time > 4) {
+		BA->com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
+		return;
+	}
+
+	switch(data->integration_time) {
+		case 0: BC->config_integration_time = REG_ATIME_2MS; break;
+		case 1: BC->config_integration_time = REG_ATIME_24MS; break;
+		case 2: BC->config_integration_time = REG_ATIME_101MS; break;
+		case 3: BC->config_integration_time = REG_ATIME_154MS; break;
+		case 4: BC->config_integration_time = REG_ATIME_700MS; break;
+	}
+
     BC->config_gain = data->gain;
-    BC->config_integration_time = data->integration_time;
+
     write_register(REG_RW_CONTROL, BC->config_gain);
     write_register(REG_RW_ATIME, BC->config_integration_time);
+
 	BA->com_return_setter(com, data);
 }
 
 void get_config(const ComType com, const GetConfig *data) {
-    Config cfg;
-	cfg.header = data->header;
-	cfg.header.length = sizeof(cfg);
-    cfg.gain = BC->config_gain;
-    cfg.integration_time = BC->config_integration_time;
-	BA->send_blocking_with_timeout(&cfg, sizeof(Config), com);
+    GetConfigReturn gcr;
+    gcr.header = data->header;
+    gcr.header.length = sizeof(GetConfigReturn);
+
+
+	switch(BC->config_integration_time) {
+		case REG_ATIME_2MS: gcr.integration_time = 0; break;
+		case REG_ATIME_24MS: gcr.integration_time = 1; break;
+		case REG_ATIME_101MS: gcr.integration_time = 2; break;
+		case REG_ATIME_154MS: gcr.integration_time = 3; break;
+		case REG_ATIME_700MS: gcr.integration_time = 4; break;
+	}
+
+    gcr.gain = BC->config_gain;
+
+	BA->send_blocking_with_timeout(&gcr, sizeof(GetConfigReturn), com);
+}
+
+void get_illuminance(const ComType com, const GetIlluminance *data) {
+	GetIlluminanceReturn gir;
+	gir.header = data->header;
+	gir.header.length = sizeof(GetIlluminanceReturn);
+	gir.illuminance = calculate_illuminance();
+
+	BA->send_blocking_with_timeout(&gir, sizeof(GetIlluminanceReturn), com);
+}
+
+void get_color_temperature(const ComType com, const GetColorTemperature *data) {
+	GetColorTemperatureReturn gctr;
+	gctr.header = data->header;
+	gctr.header.length = sizeof(GetColorTemperatureReturn);
+	gctr.color_temperature = calculate_color_temperature();
+
+	BA->send_blocking_with_timeout(&gctr, sizeof(GetColorTemperatureReturn), com);
+}
+
+inline uint32_t div_round_closest_unsigned(uint32_t n, uint32_t d) {
+    return ((n + d/2)/d);
+}
+
+inline int32_t div_round_closest(int32_t n, int32_t d) {
+    if((n < 0) ^ (d < 0)) {
+        return ((n - d/2)/d);
+    }
+
+    return div_round_closest_unsigned(n, d);
+}
+
+int32_t calculate_illuminance() {
+	return div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Y_G * BC->last_value2[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Y_G) -
+	       div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Y_R * BC->last_value1[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Y_R) -
+           div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Y_B * BC->last_value3[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Y_B);
+}
+
+uint16_t calculate_color_temperature() {
+    int32_t X = div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_X_G * BC->last_value2[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_X_G) -
+                div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_X_R * BC->last_value1[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_X_R) -
+                div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_X_B * BC->last_value3[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_X_B);
+
+    int32_t Y = calculate_illuminance();
+
+    int32_t Z = div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_G * BC->last_value2[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Z_G) -
+    			div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_R * BC->last_value1[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Z_R) +
+                div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_B * BC->last_value3[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Z_B);
+
+    if(X+Y+Z == 0) {
+    	return 0;
+    }
+
+    int32_t xc = div_round_closest(X * COLOR_TEMPERATURE_MUL_XC, X + Y + Z);
+    int32_t yc = div_round_closest(Y * COLOR_TEMPERATURE_MUL_YC, X + Y + Z);
+
+    if(COLOR_TEMPERATURE_SUB_YC - yc == 0) {
+    	return 0;
+    }
+
+    int32_t n_signed = div_round_closest((xc - COLOR_TEMPERATURE_SUB_XC)*COLOR_TEMPERATURE_MUL_N, COLOR_TEMPERATURE_SUB_YC - yc);
+
+    int32_t sign = n_signed < 0 ? -1 : 1;
+    uint32_t n = ABS(n_signed);
+
+    uint32_t poly3 = div_round_closest_unsigned(div_round_closest_unsigned(div_round_closest_unsigned(449*n, COLOR_TEMPERATURE_MUL_N)*n, COLOR_TEMPERATURE_MUL_N)*n, COLOR_TEMPERATURE_MUL_N);
+    uint32_t poly2 = div_round_closest_unsigned(div_round_closest_unsigned(3525*n, COLOR_TEMPERATURE_MUL_N)*n, COLOR_TEMPERATURE_MUL_N);
+    uint32_t poly1 = div_round_closest_unsigned(6823*n, COLOR_TEMPERATURE_MUL_N);
+
+    int32_t result = poly2 + sign*poly3 + sign*poly1 + 5520;
+    if(result < 0) {
+    	return 0;
+    } else if(result > 0xFFFF) {
+    	return 0xFFFF;
+    }
+
+    return result;
 }
 
 void read_registers(const uint8_t reg, uint8_t *data, const uint8_t length) {

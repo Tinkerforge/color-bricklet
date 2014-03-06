@@ -1,5 +1,6 @@
 /* color-bricklet
  * Copyright (C) 2014 Ishraq Ibne Ashraf <ishraq@tinkerforge.com>
+ * Copyright (C) 2014 Olaf Lüke <olaf@tinkerforge.com>
  *
  * color.h: Implementation of Color Bricklet messages
  *
@@ -26,7 +27,7 @@
 
 #include "bricklib/com/com_common.h"
 
-//fucntion IDs
+// function IDs
 #define FID_GET_COLOR 1
 #define FID_SET_COLOR_CALLBACK_PERIOD 2
 #define FID_GET_COLOR_CALLBACK_PERIOD 3
@@ -41,7 +42,10 @@
 #define FID_IS_LIGHT_ON 12
 #define FID_SET_CONFIG 13
 #define FID_GET_CONFIG 14
-#define FID_LAST 14
+#define FID_GET_ILLUMINANCE 15
+#define FID_GET_COLOR_TEMPERATURE 16
+
+#define FID_LAST 16
 
 typedef struct {
 	MessageHeader header;
@@ -62,24 +66,55 @@ typedef struct {
 
 typedef struct {
 	MessageHeader header;
+    uint8_t gain;
+    uint8_t integration_time;
+} __attribute__((__packed__)) SetConfig;
+
+typedef struct {
+	MessageHeader header;
 } __attribute__((__packed__)) GetConfig;
 
 typedef struct {
 	MessageHeader header;
     uint8_t gain;
     uint8_t integration_time;
-} __attribute__((__packed__)) Config;
+} __attribute__((__packed__)) GetConfigReturn;
+
+typedef struct {
+	MessageHeader header;
+} __attribute__((__packed__)) GetIlluminance;
+
+typedef struct {
+	MessageHeader header;
+    uint32_t illuminance;
+} __attribute__((__packed__)) GetIlluminanceReturn;
+
+typedef struct {
+	MessageHeader header;
+} __attribute__((__packed__)) GetColorTemperature;
+
+typedef struct {
+	MessageHeader header;
+    uint32_t color_temperature;
+} __attribute__((__packed__)) GetColorTemperatureReturn;
 
 void light_on(const ComType com, const LightOn *data);
 void light_off(const ComType com, const LightOff *data);
 void is_light_on(const ComType com, const IsLightOn *data);
-void set_config(const ComType com, const Config *data);
+void set_config(const ComType com, const SetConfig *data);
 void get_config(const ComType com, const GetConfig *data);
+void get_illuminance(const ComType com, const GetIlluminance *data);
+void get_color_temperature(const ComType com, const GetColorTemperature *data);
 
 void invocation(const ComType com, const uint8_t *data);
 void constructor(void);
 void destructor(void);
 void tick(const uint8_t tick_type);
+
+inline int32_t div_round_closest(int32_t n, int32_t d);
+inline uint32_t div_round_closest_unsigned(uint32_t n, uint32_t d);
+int32_t calculate_illuminance();
+uint16_t calculate_color_temperature();
 
 void read_registers(const uint8_t reg, uint8_t *data, const uint8_t length);
 void clear_interrupt();
