@@ -37,7 +37,7 @@ int main() {
 
 	// Set Period for color callback to 1s (1000ms)
 	// Note: The callback is only called every second if the 
-	//       temperature has changed since the last call!
+	//       color has changed since the last call!
 	color_set_color_callback_period(&c, 1000);
 
 	// Register color callback to function cb_color
