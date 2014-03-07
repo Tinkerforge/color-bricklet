@@ -125,7 +125,6 @@ void constructor(void) {
 }
 
 void destructor(void) {
-	simple_destructor();
 }
 
 void tick(const uint8_t tick_type) {   
@@ -146,10 +145,14 @@ void tick(const uint8_t tick_type) {
 
 void light_on(const ComType com, const LightOn *data) {
     PIN_LED.pio->PIO_SODR = PIN_LED.mask;
+
+    BA->com_return_setter(com, data);
 }
 
 void light_off(const ComType com, const LightOff *data) {
     PIN_LED.pio->PIO_CODR = PIN_LED.mask;
+
+    BA->com_return_setter(com, data);
 }
 
 void is_light_on(const ComType com, const IsLightOn *data) {
@@ -162,23 +165,24 @@ void is_light_on(const ComType com, const IsLightOn *data) {
 }
 
 void set_config(const ComType com, const SetConfig *data) {
+	BrickContext *BC_local = BC;
 	if(data->gain > 3 || data->integration_time > 4) {
 		BA->com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
 		return;
 	}
 
 	switch(data->integration_time) {
-		case 0: BC->config_integration_time = REG_ATIME_2MS; break;
-		case 1: BC->config_integration_time = REG_ATIME_24MS; break;
-		case 2: BC->config_integration_time = REG_ATIME_101MS; break;
-		case 3: BC->config_integration_time = REG_ATIME_154MS; break;
-		case 4: BC->config_integration_time = REG_ATIME_700MS; break;
+		case 0: BC_local->config_integration_time = REG_ATIME_2MS; break;
+		case 1: BC_local->config_integration_time = REG_ATIME_24MS; break;
+		case 2: BC_local->config_integration_time = REG_ATIME_101MS; break;
+		case 3: BC_local->config_integration_time = REG_ATIME_154MS; break;
+		case 4: BC_local->config_integration_time = REG_ATIME_700MS; break;
 	}
 
-    BC->config_gain = data->gain;
+	BC_local->config_gain = data->gain;
 
-    write_register(REG_RW_CONTROL, BC->config_gain);
-    write_register(REG_RW_ATIME, BC->config_integration_time);
+    write_register(REG_RW_CONTROL, BC_local->config_gain);
+    write_register(REG_RW_ATIME, BC_local->config_integration_time);
 
 	BA->com_return_setter(com, data);
 }
