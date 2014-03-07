@@ -91,6 +91,26 @@ void invocation(const ComType com, const uint8_t *data) {
             get_color_temperature(com, (GetColorTemperature*)data);
             return;
         }
+
+        case FID_SET_ILLUMINANCE_CALLBACK_PERIOD: {
+            set_illuminance_callback_period(com, (SetIlluminanceCallbackPeriod*)data);
+            return;
+        }
+
+        case FID_GET_ILLUMINANCE_CALLBACK_PERIOD: {
+            get_illuminance_callback_period(com, (GetIlluminanceCallbackPeriod*)data);
+            return;
+        }
+
+        case FID_SET_COLOR_TEMPERATURE_CALLBACK_PERIOD: {
+            set_color_temperature_callback_period(com, (SetColorTemperatureCallbackPeriod*)data);
+            return;
+        }
+
+        case FID_GET_COLOR_TEMPERATURE_CALLBACK_PERIOD: {
+            get_color_temperature_callback_period(com, (GetColorTemperatureCallbackPeriod*)data);
+            return;
+        }
     }
 
 	simple_invocation(com, data);
@@ -108,37 +128,85 @@ void constructor(void) {
     write_register(REG_RW_PERS, 0x00); // Enabling interrupt every RGBC cycle
 
     // Setting the interrupt pin as input
-    PIN_INT.type = PIO_INPUT;
-    PIN_INT.attribute = PIO_PULLUP;
-    BA->PIO_Configure(&PIN_INT, 1);
-    
+    PIN_INT.pio->PIO_PUER = PIN_INT.mask;
+    PIN_INT.pio->PIO_ODR  = PIN_INT.mask;
+    PIN_INT.pio->PIO_PER  = PIN_INT.mask;
+
     // Turning off the light by default
-    PIN_LED.type = PIO_OUTPUT_0;
-    PIN_LED.attribute = PIO_DEFAULT;
-    BA->PIO_Configure(&PIN_LED, 1);
+    PIN_LED.pio->PIO_CODR = PIN_LED.mask;
+    PIN_LED.pio->PIO_OER  = PIN_LED.mask;
+    PIN_LED.pio->PIO_PER  = PIN_LED.mask;
 
     // Setting up default configuration(gain, integration time)
     BC->config_gain = REG_CONTROL_16X_GAIN;
-    BC->config_integration_time = REG_ATIME_154MS;
-    write_register(REG_RW_CONTROL, BC->config_gain);
-    write_register(REG_RW_ATIME, BC->config_integration_time);
+    BC->config_integration_time = 3;  // 3 == REG_ATIME_154MS for user configuration
+    write_register(REG_RW_CONTROL, REG_CONTROL_16X_GAIN);
+    write_register(REG_RW_ATIME, REG_ATIME_154MS);
 
     simple_constructor();
 }
 
 void tick(const uint8_t tick_type) {
+	BrickContext *BC_local = BC;
+	BrickletAPI *BA_local = BA;
+	const uint32_t uid = BS->uid;
+
     if(tick_type & TICK_TASK_TYPE_CALCULATION) {
         if(!(PIN_INT.pio->PIO_PDSR & PIN_INT.mask)) {
             uint16_t values[4];
             read_registers(REG_RO_CDATAL, (uint8_t*)values, 8);
-            BC->value1[SIMPLE_UNIT_COLOR] = values[1];
-            BC->value2[SIMPLE_UNIT_COLOR] = values[2];
-            BC->value3[SIMPLE_UNIT_COLOR] = values[3];
-            BC->value4[SIMPLE_UNIT_COLOR] = values[0];
+            BC_local->value1[SIMPLE_UNIT_COLOR] = values[1];
+            BC_local->value2[SIMPLE_UNIT_COLOR] = values[2];
+            BC_local->value3[SIMPLE_UNIT_COLOR] = values[3];
+            BC_local->value4[SIMPLE_UNIT_COLOR] = values[0];
 
             clear_interrupt();
         }
+
+		if(BC_local->signal_period_counter_illuminance < UINT32_MAX) {
+			BC_local->signal_period_counter_illuminance++;
+		}
+		if(BC_local->signal_period_counter_color_temperature < UINT32_MAX) {
+			BC_local->signal_period_counter_color_temperature++;
+		}
     }
+
+    if(tick_type & TICK_TASK_TYPE_MESSAGE) {
+		if(BC_local->signal_period_illuminance != 0 &&
+		   BC_local->signal_period_illuminance <= BC_local->signal_period_counter_illuminance) {
+			calculate_color_temperature_and_illuminance();
+			if(BC_local->illuminance_current_value != BC_local->illuminance_last_callback_value) {
+				BC_local->illuminance_last_callback_value = BC_local->illuminance_current_value;
+				Illuminance ill;
+				BA_local->com_make_default_header(&ill, uid, sizeof(Illuminance), FID_ILLUMINANCE);
+				ill.illuminance = BC_local->illuminance_current_value;
+
+				BA_local->send_blocking_with_timeout(&ill,
+											         sizeof(Illuminance),
+											         *BA_local->com_current);
+
+				BC_local->signal_period_counter_illuminance = 0;
+			}
+		}
+
+		if(BC_local->signal_period_color_temperature != 0 &&
+		   BC_local->signal_period_color_temperature <= BC_local->signal_period_counter_color_temperature) {
+			calculate_color_temperature_and_illuminance();
+			if(BC_local->color_temperature_current_value != BC_local->color_temperature_last_callback_value) {
+				BC_local->color_temperature_last_callback_value = BC_local->color_temperature_current_value;
+				ColorTemperature ct;
+				BA_local->com_make_default_header(&ct, uid, sizeof(ColorTemperature), FID_COLOR_TEMPERATURE);
+				ct.color_temperature = BC_local->color_temperature_current_value;
+
+				BA_local->send_blocking_with_timeout(&ct,
+											         sizeof(ColorTemperature),
+											         *BA_local->com_current);
+
+				BC_local->signal_period_counter_color_temperature = 0;
+			}
+		}
+    }
+
 	simple_tick(tick_type);
 }
 
@@ -170,18 +238,22 @@ void set_config(const ComType com, const SetConfig *data) {
 		return;
 	}
 
+	BC_local->config_gain = data->gain;
+	BC_local->config_integration_time = data->integration_time;
+
+	uint8_t write_integration_time;
+
 	switch(data->integration_time) {
-		case 0: BC_local->config_integration_time = REG_ATIME_2MS; break;
-		case 1: BC_local->config_integration_time = REG_ATIME_24MS; break;
-		case 2: BC_local->config_integration_time = REG_ATIME_101MS; break;
-		case 3: BC_local->config_integration_time = REG_ATIME_154MS; break;
-		case 4: BC_local->config_integration_time = REG_ATIME_700MS; break;
+		case 0: write_integration_time = REG_ATIME_2MS; break;
+		case 1: write_integration_time = REG_ATIME_24MS; break;
+		case 2: write_integration_time = REG_ATIME_101MS; break;
+		case 3: write_integration_time = REG_ATIME_154MS; break;
+		case 4: write_integration_time = REG_ATIME_700MS; break;
+		default: write_integration_time = REG_ATIME_154MS; break;
 	}
 
-	BC_local->config_gain = data->gain;
-
     write_register(REG_RW_CONTROL, BC_local->config_gain);
-    write_register(REG_RW_ATIME, BC_local->config_integration_time);
+    write_register(REG_RW_ATIME, write_integration_time);
 
 	BA->com_return_setter(com, data);
 }
@@ -191,16 +263,8 @@ void get_config(const ComType com, const GetConfig *data) {
     gcr.header = data->header;
     gcr.header.length = sizeof(GetConfigReturn);
 
-
-	switch(BC->config_integration_time) {
-		case REG_ATIME_2MS: gcr.integration_time = 0; break;
-		case REG_ATIME_24MS: gcr.integration_time = 1; break;
-		case REG_ATIME_101MS: gcr.integration_time = 2; break;
-		case REG_ATIME_154MS: gcr.integration_time = 3; break;
-		case REG_ATIME_700MS: gcr.integration_time = 4; break;
-	}
-
     gcr.gain = BC->config_gain;
+    gcr.integration_time = BC->config_integration_time;
 
 	BA->send_blocking_with_timeout(&gcr, sizeof(GetConfigReturn), com);
 }
@@ -209,7 +273,8 @@ void get_illuminance(const ComType com, const GetIlluminance *data) {
 	GetIlluminanceReturn gir;
 	gir.header = data->header;
 	gir.header.length = sizeof(GetIlluminanceReturn);
-	gir.illuminance = calculate_illuminance();
+	calculate_color_temperature_and_illuminance();
+	gir.illuminance = BC->illuminance_current_value;
 
 	BA->send_blocking_with_timeout(&gir, sizeof(GetIlluminanceReturn), com);
 }
@@ -218,9 +283,38 @@ void get_color_temperature(const ComType com, const GetColorTemperature *data) {
 	GetColorTemperatureReturn gctr;
 	gctr.header = data->header;
 	gctr.header.length = sizeof(GetColorTemperatureReturn);
-	gctr.color_temperature = calculate_color_temperature();
+	calculate_color_temperature_and_illuminance();
+	gctr.color_temperature = BC->color_temperature_current_value;
 
 	BA->send_blocking_with_timeout(&gctr, sizeof(GetColorTemperatureReturn), com);
+}
+
+void set_illuminance_callback_period(const ComType com, const SetIlluminanceCallbackPeriod *data) {
+	BC->signal_period_illuminance = data->period;
+	BA->com_return_setter(com, data);
+}
+
+void get_illuminance_callback_period(const ComType com, const GetIlluminanceCallbackPeriod *data) {
+	GetIlluminanceCallbackPeriodReturn gicpr;
+	gicpr.header = data->header;
+	gicpr.header.length = sizeof(GetIlluminanceCallbackPeriodReturn);
+	gicpr.period = BC->signal_period_illuminance;
+
+	BA->send_blocking_with_timeout(&gicpr, sizeof(GetIlluminanceCallbackPeriodReturn), com);
+}
+
+void set_color_temperature_callback_period(const ComType com, const SetColorTemperatureCallbackPeriod *data) {
+	BC->signal_period_color_temperature = data->period;
+	BA->com_return_setter(com, data);
+}
+
+void get_color_temperature_callback_period(const ComType com, const GetColorTemperatureCallbackPeriod *data) {
+	GetColorTemperatureCallbackPeriodReturn gctcpr;
+	gctcpr.header = data->header;
+	gctcpr.header.length = sizeof(GetColorTemperatureCallbackPeriodReturn);
+	gctcpr.period = BC->signal_period_color_temperature;
+
+	BA->send_blocking_with_timeout(&gctcpr, sizeof(GetColorTemperatureCallbackPeriodReturn), com);
 }
 
 inline uint32_t div_round_closest_unsigned(uint32_t n, uint32_t d) {
@@ -232,35 +326,54 @@ inline int32_t div_round_closest(int32_t n, int32_t d) {
         return ((n - d/2)/d);
     }
 
-    return div_round_closest_unsigned(n, d);
+    return ((n + d/2)/d);
 }
 
-int32_t calculate_illuminance() {
-	return div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Y_G * BC->last_value2[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Y_G) -
-	       div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Y_R * BC->last_value1[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Y_R) -
-           div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Y_B * BC->last_value3[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Y_B);
-}
+void calculate_color_temperature_and_illuminance() {
+	BrickContext *BC_local = BC;
 
-uint16_t calculate_color_temperature() {
-    int32_t X = div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_X_G * BC->last_value2[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_X_G) -
-                div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_X_R * BC->last_value1[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_X_R) -
-                div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_X_B * BC->last_value3[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_X_B);
+	BC_local->illuminance_last_value = BC_local->illuminance_current_value;
+	BC_local->color_temperature_last_value = BC_local->color_temperature_current_value;
 
-    int32_t Y = calculate_illuminance();
+	const uint16_t value_r = BC_local->last_value1[SIMPLE_UNIT_COLOR];
+	const uint16_t value_g = BC_local->last_value2[SIMPLE_UNIT_COLOR];
+	const uint16_t value_b = BC_local->last_value3[SIMPLE_UNIT_COLOR];
 
-    int32_t Z = div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_G * BC->last_value2[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Z_G) -
-    			div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_R * BC->last_value1[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Z_R) +
-                div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_B * BC->last_value3[SIMPLE_UNIT_COLOR], COLOR_TEMPERATURE_DIV_Z_B);
+	if(BC_local->color_temperature_last_value_r == value_r &&
+	   BC_local->color_temperature_last_value_g == value_g &&
+	   BC_local->color_temperature_last_value_b == value_b) {
+		return;
+	}
+
+	BC_local->color_temperature_current_value = 0;
+
+	BC_local->color_temperature_last_value_r = value_r;
+	BC_local->color_temperature_last_value_g = value_g;
+	BC_local->color_temperature_last_value_b = value_b;
+
+    int32_t X = div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_X_G * value_g, COLOR_TEMPERATURE_DIV_X_G) -
+                div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_X_R * value_r, COLOR_TEMPERATURE_DIV_X_R) -
+                div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_X_B * value_b, COLOR_TEMPERATURE_DIV_X_B);
+
+    int32_t Y = div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Y_G * value_g, COLOR_TEMPERATURE_DIV_Y_G) -
+ 	            div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Y_R * value_r, COLOR_TEMPERATURE_DIV_Y_R) -
+                div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Y_B * value_b, COLOR_TEMPERATURE_DIV_Y_B);
+
+    int32_t Z = div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_G * value_g, COLOR_TEMPERATURE_DIV_Z_G) -
+    			div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_R * value_r, COLOR_TEMPERATURE_DIV_Z_R) +
+                div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_B * value_b, COLOR_TEMPERATURE_DIV_Z_B);
+
+    BC_local->illuminance_current_value = Y;
 
     if(X+Y+Z == 0) {
-    	return 0;
+    	return;
     }
 
     int32_t xc = div_round_closest(X * COLOR_TEMPERATURE_MUL_XC, X + Y + Z);
     int32_t yc = div_round_closest(Y * COLOR_TEMPERATURE_MUL_YC, X + Y + Z);
 
     if(COLOR_TEMPERATURE_SUB_YC - yc == 0) {
-    	return 0;
+    	return;
     }
 
     int32_t n_signed = div_round_closest((xc - COLOR_TEMPERATURE_SUB_XC)*COLOR_TEMPERATURE_MUL_N, COLOR_TEMPERATURE_SUB_YC - yc);
@@ -274,12 +387,12 @@ uint16_t calculate_color_temperature() {
 
     int32_t result = poly2 + sign*poly3 + sign*poly1 + 5520;
     if(result < 0) {
-    	return 0;
+    	return;
     } else if(result > 0xFFFF) {
-    	return 0xFFFF;
+    	result = 0xFFFF;
     }
 
-    return result;
+    BC_local->color_temperature_current_value = result;
 }
 
 void read_registers(const uint8_t reg, uint8_t *data, const uint8_t length) {

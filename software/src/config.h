@@ -167,6 +167,24 @@ typedef struct {
 	int32_t  threshold_max_save4[NUM_SIMPLE_VALUES];
 	char     threshold_option_save[NUM_SIMPLE_VALUES];
 
+	uint32_t signal_period_illuminance;
+	uint32_t signal_period_counter_illuminance;
+	uint32_t signal_period_color_temperature;
+	uint32_t signal_period_counter_color_temperature;
+
+	int32_t illuminance_last_callback_value;
+	uint16_t color_temperature_last_callback_value;
+
+	int32_t illuminance_last_value;
+	uint16_t color_temperature_last_value;
+
+	int32_t illuminance_current_value;
+	uint16_t color_temperature_current_value;
+
+	uint16_t color_temperature_last_value_r;
+	uint16_t color_temperature_last_value_g;
+	uint16_t color_temperature_last_value_b;
+
 	uint32_t tick;
 } BrickContext;
 

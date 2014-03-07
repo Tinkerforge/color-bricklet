@@ -44,8 +44,14 @@
 #define FID_GET_CONFIG 14
 #define FID_GET_ILLUMINANCE 15
 #define FID_GET_COLOR_TEMPERATURE 16
+#define FID_SET_ILLUMINANCE_CALLBACK_PERIOD 17
+#define FID_GET_ILLUMINANCE_CALLBACK_PERIOD 18
+#define FID_SET_COLOR_TEMPERATURE_CALLBACK_PERIOD 19
+#define FID_GET_COLOR_TEMPERATURE_CALLBACK_PERIOD 20
+#define FID_ILLUMINANCE 21
+#define FID_COLOR_TEMPERATURE 22
 
-#define FID_LAST 16
+#define FID_LAST 20
 
 typedef struct {
 	MessageHeader header;
@@ -95,8 +101,46 @@ typedef struct {
 
 typedef struct {
 	MessageHeader header;
-    uint32_t color_temperature;
+    uint16_t color_temperature;
 } __attribute__((__packed__)) GetColorTemperatureReturn;
+
+typedef struct {
+	MessageHeader header;
+	uint32_t period;
+} __attribute__((__packed__)) SetIlluminanceCallbackPeriod;
+
+typedef struct {
+	MessageHeader header;
+} __attribute__((__packed__)) GetIlluminanceCallbackPeriod;
+
+typedef struct {
+	MessageHeader header;
+	uint32_t period;
+} __attribute__((__packed__)) GetIlluminanceCallbackPeriodReturn;
+
+typedef struct {
+	MessageHeader header;
+	uint32_t period;
+} __attribute__((__packed__)) SetColorTemperatureCallbackPeriod;
+
+typedef struct {
+	MessageHeader header;
+} __attribute__((__packed__)) GetColorTemperatureCallbackPeriod;
+
+typedef struct {
+	MessageHeader header;
+	uint32_t period;
+} __attribute__((__packed__)) GetColorTemperatureCallbackPeriodReturn;
+
+typedef struct {
+	MessageHeader header;
+    uint32_t illuminance;
+} __attribute__((__packed__)) Illuminance;
+
+typedef struct {
+	MessageHeader header;
+    uint16_t color_temperature;
+} __attribute__((__packed__)) ColorTemperature;
 
 void light_on(const ComType com, const LightOn *data);
 void light_off(const ComType com, const LightOff *data);
@@ -105,6 +149,10 @@ void set_config(const ComType com, const SetConfig *data);
 void get_config(const ComType com, const GetConfig *data);
 void get_illuminance(const ComType com, const GetIlluminance *data);
 void get_color_temperature(const ComType com, const GetColorTemperature *data);
+void set_illuminance_callback_period(const ComType com, const SetIlluminanceCallbackPeriod *data);
+void get_illuminance_callback_period(const ComType com, const GetIlluminanceCallbackPeriod *data);
+void set_color_temperature_callback_period(const ComType com, const SetColorTemperatureCallbackPeriod *data);
+void get_color_temperature_callback_period(const ComType com, const GetColorTemperatureCallbackPeriod *data);
 
 void invocation(const ComType com, const uint8_t *data);
 void constructor(void);
@@ -113,8 +161,7 @@ void tick(const uint8_t tick_type);
 
 inline int32_t div_round_closest(int32_t n, int32_t d);
 inline uint32_t div_round_closest_unsigned(uint32_t n, uint32_t d);
-int32_t calculate_illuminance();
-uint16_t calculate_color_temperature();
+void calculate_color_temperature_and_illuminance();
 
 void read_registers(const uint8_t reg, uint8_t *data, const uint8_t length);
 void clear_interrupt();
