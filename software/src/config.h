@@ -50,6 +50,7 @@
 #define SIMPLE_VALUE_TYPE uint16_t
 #define BRICKLET_HAS_SIMPLE_X4
 #define INVOCATION_IN_BRICKLET_CODE
+#define BRICKLET_HAS_NO_DESTRUCTOR
 
 // register definitions
 #define REG_RW_ENABLE   0x00

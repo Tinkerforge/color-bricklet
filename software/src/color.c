@@ -122,12 +122,11 @@ void constructor(void) {
     BC->config_integration_time = REG_ATIME_154MS;
     write_register(REG_RW_CONTROL, BC->config_gain);
     write_register(REG_RW_ATIME, BC->config_integration_time);
+
+    simple_constructor();
 }
 
-void destructor(void) {
-}
-
-void tick(const uint8_t tick_type) {   
+void tick(const uint8_t tick_type) {
     if(tick_type & TICK_TASK_TYPE_CALCULATION) {
         if(!(PIN_INT.pio->PIO_PDSR & PIN_INT.mask)) {
             uint16_t values[4];
