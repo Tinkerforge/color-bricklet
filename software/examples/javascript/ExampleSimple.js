@@ -9,7 +9,7 @@ var c = new Tinkerforge.BrickletColor(UID, ipcon);// Create device object
 
 ipcon.connect(HOST, PORT,
     function(error) {
-        console.log('Error: '+error);        
+        console.log('Error: '+error);
     }
 );// Connect to brickd
 

@@ -16,9 +16,9 @@ ipcon.connect(HOST, PORT,
 // Don't use device before ipcon is connected
 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
     function(connectReason) {
-        // Set Period for temperature callback to 1s (1000ms)
+        // Set Period for color callback to 1s (1000ms)
         // Note: The callback is only called every second if the 
-        // temperature has changed since the last call!
+        // color has changed since the last call!
         c.setColorCallbackPeriod(1000);
     }
 );

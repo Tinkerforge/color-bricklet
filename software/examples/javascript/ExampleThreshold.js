@@ -9,7 +9,7 @@ var c = new Tinkerforge.BrickletColor(UID, ipcon);// Create device object
 
 ipcon.connect(HOST, PORT,
     function(error) {
-        console.log('Error: '+error);        
+        console.log('Error: '+error);
     }
 );// Connect to brickd
 
@@ -23,7 +23,7 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
         // GREEN: greater than 200
         // BLUE : greater than 300
         // CLEAR: greater than 400
-        c.setColorCallbackThreshold('>', 0, 100, 0, 200, 0, 300, 0, 400);       
+        c.setColorCallbackThreshold('>', 0, 100, 0, 200, 0, 300, 0, 400);
     }
 );
 
