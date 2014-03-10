@@ -29,8 +29,12 @@ if __name__ == "__main__":
     # Register threshold reached callback to function cb_reached
     c.register_callback(c.CALLBACK_COLOR_REACHED, cb_reached)
 
-    # Configure threshold
-    c.set_color_callback_threshold('>', 255, 255, 255, 255, 255, 255, 255, 255)
+    # Configure threshold for a color values,
+    # RED  : greater than 100
+    # GREEN: greater than 200
+    # BLUE : greater than 300
+    # CLEAR: greater than 400
+    c.set_color_callback_threshold('>', 0, 100, 0, 200, 0, 300, 0, 400)
     
     raw_input('Press key to exit\n') # Use input() in Python 3
     ipcon.disconnect()
