@@ -10,44 +10,48 @@
 
 // Callback for color with RGBC values greater than 255
 void cb_reached(uint16_t r, uint16_t g, uint16_t b, uint16_t c, void *user_data) {
-	(void)user_data; // avoid unused parameter warning
+    (void)user_data; // avoid unused parameter warning
 
-	printf("Color(R) = %d.\n", r);
+    printf("Color(R) = %d.\n", r);
     printf("Color(G) = %d.\n", g);
     printf("Color(B) = %d.\n", b);
     printf("Color(C) = %d.\n", c);
-	printf("\n");
+    printf("\n");
 }
 
 int main() {
-	// Create IP connection
-	IPConnection ipcon;
-	ipcon_create(&ipcon);
+    // Create IP connection
+    IPConnection ipcon;
+    ipcon_create(&ipcon);
 
-	// Create device object
-	Color c;
-	color_create(&c, UID, &ipcon); 
+    // Create device object
+    Color c;
+    color_create(&c, UID, &ipcon); 
 
-	// Connect to brickd
-	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {
-		fprintf(stderr, "Could not connect\n");
-		exit(1);
-	}
-	// Don't use device before ipcon is connected
-	
-	// Get threshold callbacks with a debounce time of 10 seconds (10000ms)
-	color_set_debounce_period(&c, 10000);
+    // Connect to brickd
+    if(ipcon_connect(&ipcon, HOST, PORT) < 0) {
+        fprintf(stderr, "Could not connect\n");
+        exit(1);
+    }
+    // Don't use device before ipcon is connected
+    
+    // Get threshold callbacks with a debounce time of 10 seconds (10000ms)
+    color_set_debounce_period(&c, 10000);
 
-	// Register threshold reached callback to function cb_reached
-	color_register_callback(&c,
-	                              COLOR_CALLBACK_COLOR_REACHED,
-	                              (void *)cb_reached,
-	                              NULL);
+    // Register threshold reached callback to function cb_reached
+    color_register_callback(&c,
+                                  COLOR_CALLBACK_COLOR_REACHED,
+                                  (void *)cb_reached,
+                                  NULL);
 
-	// Configure threshold for a color value in RGBC with greater than 255
-	color_set_color_callback_threshold(&c, '>', 255, 255, 255, 255, 255, 255, 255, 255);
+    // Configure threshold for a color values,
+    // RED  : greater than 100
+    // GREEN: greater than 200
+    // BLUE : greater than 300
+    // CLEAR: greater than 400
+    color_set_color_callback_threshold(&c, '>', 0, 100, 0, 200, 0, 300, 0, 400);
 
-	printf("Press key to exit\n");
-	getchar();
-	ipcon_destroy(&ipcon); // Calls ipcon_disconnect internally
+    printf("Press key to exit\n");
+    getchar();
+    ipcon_destroy(&ipcon); // Calls ipcon_disconnect internally
 }
