@@ -44,7 +44,7 @@ int main() {
                                   (void *)cb_reached,
                                   NULL);
 
-    // Configure threshold for a color values,
+    // Configure threshold for color values,
     // RED  : greater than 100
     // GREEN: greater than 200
     // BLUE : greater than 300
