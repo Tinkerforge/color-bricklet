@@ -29,7 +29,7 @@ if __name__ == "__main__":
     # Register threshold reached callback to function cb_reached
     c.register_callback(c.CALLBACK_COLOR_REACHED, cb_reached)
 
-    # Configure threshold for a color values,
+    # Configure threshold for color values,
     # RED  : greater than 100
     # GREEN: greater than 200
     # BLUE : greater than 300
