@@ -8,7 +8,7 @@
 #define PORT 4223
 #define UID "abc" // Change to your UID
 
-// Callback for color with RGBC values greater than 255
+// Callback for color
 void cb_color(uint16_t r, uint16_t g, uint16_t b, uint16_t c, void *user_data) {
 	(void)user_data; // avoid unused parameter warning
 
