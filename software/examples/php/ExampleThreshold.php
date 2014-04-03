@@ -33,10 +33,10 @@ $c->setDebouncePeriod(10000);
 $c->registerCallback(BrickletColor::CALLBACK_COLOR_REACHED, 'cb_reached');
 
 // Configure threshold for color values,
-// RED  : greater than 100
-// GREEN: greater than 200
-// BLUE : greater than 300
-// CLEAR: greater than 400
+// RED   greater than 100
+// GREEN greater than 200
+// BLUE  greater than 300
+// CLEAR greater than 400
 $c->setColorCallbackThreshold('>', 0, 100, 0, 200, 0, 300, 0, 400);
 
 echo "Press ctrl+c to exit\n";

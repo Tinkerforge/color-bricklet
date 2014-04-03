@@ -21,18 +21,18 @@ c.set_debounce_period 10000
 
 # Register callback for color reached threshold
 c.register_callback(BrickletColor::CALLBACK_COLOR_REACHED) do |r, g, b, c|
-    puts "Color(R): #{r}"
-    puts "Color(G): #{g}"
-    puts "Color(B): #{b}"
-    puts "Color(C): #{c}"
-    puts ''
+  puts "Color(R): #{r}"
+  puts "Color(G): #{g}"
+  puts "Color(B): #{b}"
+  puts "Color(C): #{c}"
+  puts ''
 end
 
 # Configure threshold for color values,
-# RED  : greater than 100
-# GREEN: greater than 200
-# BLUE : greater than 300
-# CLEAR: greater than 400
+# RED   greater than 100
+# GREEN greater than 200
+# BLUE  greater than 300
+# CLEAR greater than 400
 c.set_color_callback_threshold '>', 0, 100, 0, 200, 0, 300, 0, 400
 
 puts 'Press key to exit'

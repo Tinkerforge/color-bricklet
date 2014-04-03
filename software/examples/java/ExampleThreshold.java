@@ -20,10 +20,10 @@ public class ExampleThreshold {
 
 		// Add and implement color reached listener
 		// Configure threshold for color values,
-		// RED  : greater than 100
-		// GREEN: greater than 200
-		// BLUE : greater than 300
-		// CLEAR: greater than 400
+		// RED   greater than 100
+		// GREEN greater than 200
+		// BLUE  greater than 300
+		// CLEAR greater than 400
 		c.setColorCallbackThreshold('>', (int)(0), (int)(100), (int)(0), (int)(200), (int)(0), (int)(300), (int)(0), (int)(400));
 
 		c.addColorReachedListener(new BrickletColor.ColorReachedListener() {

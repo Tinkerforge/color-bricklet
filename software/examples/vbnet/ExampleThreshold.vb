@@ -28,10 +28,10 @@ Module ExampleSimple
         AddHandler c.ColorReached, AddressOf ReachedCB
 
         ' Configure threshold for color values,
-        ' RED  : greater than 100
-        ' GREEN: greater than 200
-        ' BLUE : greater than 300
-        ' CLEAR: greater than 400
+        ' RED   greater than 100
+        ' GREEN greater than 200
+        ' BLUE  greater than 300
+        ' CLEAR greater than 400
         c.SetColorCallbackThreshold(">"C, 0, 100, 0, 200, 0, 300, 0, 400)
 
         System.Console.WriteLine("Press key to exit")

@@ -40,15 +40,15 @@ int main() {
 
     // Register threshold reached callback to function cb_reached
     color_register_callback(&c,
-                                  COLOR_CALLBACK_COLOR_REACHED,
-                                  (void *)cb_reached,
-                                  NULL);
+                            COLOR_CALLBACK_COLOR_REACHED,
+                            (void *)cb_reached,
+                            NULL);
 
     // Configure threshold for color values,
-    // RED  : greater than 100
-    // GREEN: greater than 200
-    // BLUE : greater than 300
-    // CLEAR: greater than 400
+    // RED   greater than 100
+    // GREEN greater than 200
+    // BLUE  greater than 300
+    // CLEAR greater than 400
     color_set_color_callback_threshold(&c, '>', 0, 100, 0, 200, 0, 300, 0, 400);
 
     printf("Press key to exit\n");

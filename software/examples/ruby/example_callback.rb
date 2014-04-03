@@ -23,11 +23,11 @@ c.set_color_callback_period 1000
 
 # Register color callback
 c.register_callback(BrickletColor::CALLBACK_COLOR) do |r, g, b, c|
-    puts "Color(R): #{r}"
-    puts "Color(G): #{g}"
-    puts "Color(B): #{b}"
-    puts "Color(C): #{c}"
-    puts ''
+  puts "Color(R): #{r}"
+  puts "Color(G): #{g}"
+  puts "Color(B): #{b}"
+  puts "Color(C): #{c}"
+  puts ''
 end
 
 puts 'Press key to exit'
