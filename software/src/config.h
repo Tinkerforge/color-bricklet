@@ -90,11 +90,10 @@
 #define REG_ENABLE_AEN  (1 << 1)
 #define REG_ENABLE_PON  (1 << 0)
 
-
-#define PIN_INT   (BS->pin1_ad)
-#define PIN_LED   (BS->pin2_da)
-#define PIN_SCL   (BS->pin4_io)
-#define PIN_SDA   (BS->pin3_pwm)
+#define PIN_INT   (BS->pin3_pwm)
+#define PIN_LED   (BS->pin4_io)
+#define PIN_SCL   (BS->pin1_ad)
+#define PIN_SDA   (BS->pin2_da)
 
 #define COMMAND_REG_SEL ((1 << 7) | (1 << 5)) //set bit 7 of command register
 
