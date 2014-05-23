@@ -138,15 +138,16 @@ void constructor(void) {
     PIN_LED.pio->PIO_PER  = PIN_LED.mask;
 
     // Setting up default configuration(gain, integration time)
-    BC->config_gain = REG_CONTROL_16X_GAIN;
+    BC->config_gain = REG_CONTROL_60X_GAIN;
     BC->config_integration_time = 3;  // 3 == REG_ATIME_154MS for user configuration
-    write_register(REG_RW_CONTROL, REG_CONTROL_16X_GAIN);
+    write_register(REG_RW_CONTROL, REG_CONTROL_60X_GAIN);
     write_register(REG_RW_ATIME, REG_ATIME_154MS);
 
     simple_constructor();
 }
 
 void tick(const uint8_t tick_type) {
+	
 	BrickContext *BC_local = BC;
 	BrickletAPI *BA_local = BA;
 	const uint32_t uid = BS->uid;
@@ -208,6 +209,7 @@ void tick(const uint8_t tick_type) {
     }
 
 	simple_tick(tick_type);
+	
 }
 
 void light_on(const ComType com, const LightOn *data) {
