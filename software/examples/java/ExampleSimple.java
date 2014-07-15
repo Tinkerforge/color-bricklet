@@ -25,7 +25,7 @@ public class ExampleSimple {
 		System.out.println("Color(C): " + color.c);
 		System.out.println("");
 
-		System.console().readLine("Press key to exit\n");
+		System.out.println("Press key to exit"); System.in.read();
 		ipcon.disconnect();
 	}
 }
