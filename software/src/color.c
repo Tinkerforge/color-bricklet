@@ -365,7 +365,7 @@ void calculate_color_temperature_and_illuminance() {
     			div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_R * value_r, COLOR_TEMPERATURE_DIV_Z_R) +
                 div_round_closest_unsigned(COLOR_TEMPERATURE_MULT_Z_B * value_b, COLOR_TEMPERATURE_DIV_Z_B);
 
-    BC_local->illuminance_current_value = Y;
+    BC_local->illuminance_current_value = MAX(0, Y);
 
     if(X+Y+Z == 0) {
     	return;
