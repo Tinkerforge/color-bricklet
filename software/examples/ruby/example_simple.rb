@@ -16,9 +16,12 @@ c = BrickletColor.new UID, ipcon # Create device object
 ipcon.connect HOST, PORT # Connect to brickd
 # Don't use device before ipcon is connected
 
-# Get current color
+# Get current color (returned as array [r, g, b, c])
 color = c.get_color
-puts "Color(R, G, B, C): #{color}"
+puts "Color(R): #{color[0]}"
+puts "Color(G): #{color[1]}"
+puts "Color(B): #{color[2]}"
+puts "Color(C): #{color[3]}"
 
 puts 'Press key to exit'
 $stdin.gets

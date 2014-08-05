@@ -12,7 +12,7 @@ tinkerforge call color-bricklet $uid set-debounce-period 10000
 # GREEN greater than 200
 # BLUE  greater than 300
 # CLEAR greater than 400
-tinkerforge call color-bricklet $uid set-color-callback-threshold greater 0 100 0 200 0 300 0 400
+tinkerforge call color-bricklet $uid set-color-callback-threshold greater 100 0 200 0 300 0 400 0
 
 # handle incoming color-reached callbacks
 tinkerforge dispatch color-bricklet $uid color-reached\

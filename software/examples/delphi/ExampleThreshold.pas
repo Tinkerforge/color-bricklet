@@ -61,7 +61,7 @@ begin
     GREEN: greater than 200
     BLUE : greater than 300
     CLEAR: greater than 400 }
-  c.SetColorCallbackThreshold('>', 0, 100, 0, 200, 0, 300, 0, 400);
+  c.SetColorCallbackThreshold('>', 100, 0, 200, 0, 300, 0, 400, 0);
 
   WriteLn('Press key to exit');
   ReadLn;

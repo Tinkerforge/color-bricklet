@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 
 #include "ip_connection.h"
@@ -15,7 +14,7 @@ int main() {
 
 	// Create device object
 	Color c;
-	color_create(&c, UID, &ipcon); 
+	color_create(&c, UID, &ipcon);
 
 	// Connect to brickd
 	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {
@@ -26,18 +25,18 @@ int main() {
 
 	// Get current color in RGBC
 	uint16_t r;
-    uint16_t g;
-    uint16_t b;
-    uint16_t C;
-	if(color_get_color(&c, &r, &g, &b, &C) < 0) {
+	uint16_t g;
+	uint16_t b;
+	uint16_t cl;
+	if(color_get_color(&c, &r, &g, &b, &cl) < 0) {
 		fprintf(stderr, "Could not get value, probably timeout\n");
 		exit(1);
 	}
 
-	printf("Color(R) = %d.\n", r);
-    printf("Color(G) = %d.\n", g);
-    printf("Color(B) = %d.\n", b);
-    printf("Color(C) = %d.\n", C);
+	printf("Color(R): %u\n", r);
+	printf("Color(G): %u\n", g);
+	printf("Color(B): %u\n", b);
+	printf("Color(C): %u\n", cl);
 	printf("\n");
 
 	printf("Press key to exit\n");

@@ -1,0 +1,40 @@
+Needs["NETLink`"]
+LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
+
+host="localhost"
+port=4223
+uid="abc"(* Change to your UID *)
+
+(* Create IPConnection and device object *)
+ipcon=NETNew["Tinkerforge.IPConnection"]
+c=NETNew["Tinkerforge.BrickletColor",uid,ipcon]
+ipcon@Connect[host,port]
+
+(* Get threshold callbacks with a debounce time of 10 seconds (10000ms) *)
+c@SetDebouncePeriod[10000]
+
+(* Callback for color threshold reached *)
+ColorReachedCB[sender_,r_,g_,b_,cl_]:=
+ Module[{},
+  Print["Color(R): "<>ToString[N[r]]];
+  Print["Color(G): "<>ToString[N[g]]];
+  Print["Color(B): "<>ToString[N[b]]];
+  Print["Color(C): "<>ToString[N[cl]]]
+ ]
+
+AddEventHandler[c@ColorReached,ColorReachedCB]
+
+(* Configure threshold for color values,
+   "RED greater than 100",
+   "GREEN greater than 200",
+   "BLUE greater than 300" and
+   "CLEAR greater than 400" *)
+option=Tinkerforge`BrickletColor`THRESHOLDUOPTIONUGREATER
+c@SetColorCallbackThreshold[option,100,0,200,0,300,0,400,0]
+
+Input["Click OK to exit"]
+
+(* Clean up *)
+ipcon@Disconnect[]
+ReleaseNETObject[c]
+ReleaseNETObject[ipcon]

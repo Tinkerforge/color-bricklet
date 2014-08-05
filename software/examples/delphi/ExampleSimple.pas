@@ -38,7 +38,10 @@ begin
 
   { Get current color (in RGBC) }
   c.GetColor(r, g, b, cl);
-  WriteLn(Format('Color(R, G, B, C): %d, %d, %d, %d', [r, g, b, cl]));
+  WriteLn(Format('Color(R): %u', [r]));
+  WriteLn(Format('Color(G): %u', [g]));
+  WriteLn(Format('Color(B): %u', [b]));
+  WriteLn(Format('Color(C): %u', [cl]));
 
   WriteLn('Press key to exit');
   ReadLn;

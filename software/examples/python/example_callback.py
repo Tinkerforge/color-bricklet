@@ -8,14 +8,13 @@ UID = "abc" # Change to your UID
 from tinkerforge.ip_connection import IPConnection
 from tinkerforge.bricklet_color import Color
 
-# Callback function for color callback (in RGBC)
-def cb_color(r, g, b, c):
+# Callback function for color callback
+def cb_color(r, g, b, cl):
     print('Color(R): ' + str(r))
     print('Color(G): ' + str(g))
     print('Color(B): ' + str(b))
-    print('Color(C): ' + str(c))
+    print('Color(C): ' + str(cl))
     print('')
-
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection

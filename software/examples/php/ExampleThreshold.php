@@ -11,12 +11,12 @@ const PORT = 4223;
 const UID = 'abc'; // Change to your UID
 
 // Callback for color threshold reached
-function cb_reached($r, $g, $b, $C)
+function cb_reached($r, $g, $b, $cl)
 {
     echo "Color(R): " . $r ."\n";
     echo "Color(G): " . $g ."\n";
     echo "Color(B): " . $b ."\n";
-    echo "Color(C): " . $C ."\n";
+    echo "Color(C): " . $cl ."\n";
     echo "\n";
 }
 
@@ -37,7 +37,7 @@ $c->registerCallback(BrickletColor::CALLBACK_COLOR_REACHED, 'cb_reached');
 // GREEN greater than 200
 // BLUE  greater than 300
 // CLEAR greater than 400
-$c->setColorCallbackThreshold('>', 0, 100, 0, 200, 0, 300, 0, 400);
+$c->setColorCallbackThreshold('>', 100, 0, 200, 0, 300, 0, 400, 0);
 
 echo "Press ctrl+c to exit\n";
 $ipcon->dispatchCallbacks(-1); // Dispatch callbacks forever

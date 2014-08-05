@@ -8,12 +8,12 @@ UID = "abc" # Change to your UID
 from tinkerforge.ip_connection import IPConnection
 from tinkerforge.bricklet_color import Color
 
-# Callback function for color callback (in RGBC)
-def cb_reached(r, g, b, c):
+# Callback function for color callback
+def cb_reached(r, g, b, cl):
     print('Color(R): ' + str(r))
     print('Color(G): ' + str(g))
     print('Color(B): ' + str(b))
-    print('Color(C): ' + str(c))
+    print('Color(C): ' + str(cl))
     print('')
 
 if __name__ == "__main__":
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     # GREEN greater than 200
     # BLUE  greater than 300
     # CLEAR greater than 400
-    c.set_color_callback_threshold('>', 0, 100, 0, 200, 0, 300, 0, 400)
+    c.set_color_callback_threshold('>', 100, 0, 200, 0, 300, 0, 400, 0)
     
     raw_input('Press key to exit\n') # Use input() in Python 3
     ipcon.disconnect()

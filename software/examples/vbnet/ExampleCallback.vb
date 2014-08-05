@@ -5,12 +5,13 @@ Module ExampleSimple
     Const PORT As Integer = 4223
     Const UID As String = "abc" ' Change to your UID
 
-    ' Callback function for color callback (in RGBC)
+    ' Callback function for color callback
     Sub ColorCB(ByVal sender As BrickletColor, ByVal r As Integer, _
                 ByVal g As Integer, ByVal b As Integer, ByVal cl As Integer)
-                
-        System.Console.WriteLine("Color(R, G, B, C): " + r.ToString() _
-        + ", " + g.ToString() + ", " + b.ToString() + ", " + cl.ToString())
+        System.Console.WriteLine("Color(R): " + r.ToString())
+        System.Console.WriteLine("Color(G): " + g.ToString())
+        System.Console.WriteLine("Color(B): " + b.ToString())
+        System.Console.WriteLine("Color(C): " + cl.ToString())
         System.Console.WriteLine("")
     End Sub
 

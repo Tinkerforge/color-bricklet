@@ -17,7 +17,7 @@ ipcon.connect(HOST, PORT,
 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
     function(connectReason) {
         // Set Period for color callback to 1s (1000ms)
-        // Note: The callback is only called every second if the 
+        // Note: The callback is only called every second if the
         // color has changed since the last call!
         c.setColorCallbackPeriod(1000);
     }
@@ -26,11 +26,11 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
 // Register temperature callback
 c.on(Tinkerforge.BrickletColor.CALLBACK_COLOR,
     // Callback function for color callback
-    function(r, g, b, C) {
+    function(r, g, b, cl) {
         console.log('Color(R): '+r);
         console.log('Color(G): '+g);
         console.log('Color(B): '+b);
-        console.log('Color(C): '+C);
+        console.log('Color(C): '+cl);
         console.log();
     }
 );

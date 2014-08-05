@@ -1,0 +1,25 @@
+Needs["NETLink`"]
+LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
+
+host="localhost"
+port=4223
+uid="abc"(* Change to your UID *)
+
+(* Create IPConnection and device object *)
+ipcon=NETNew["Tinkerforge.IPConnection"]
+c=NETNew["Tinkerforge.BrickletColor",uid,ipcon]
+ipcon@Connect[host,port]
+
+r=0;g=0;b=0;cl=0
+
+(* Get current color *)
+c@GetColor[r,g,b,cl]
+Print["Color(R): "<>ToString[N[r]]]
+Print["Color(G): "<>ToString[N[g]]]
+Print["Color(B): "<>ToString[N[b]]]
+Print["Color(C): "<>ToString[N[cl]]]
+
+(* Clean up *)
+ipcon@Disconnect[]
+ReleaseNETObject[c]
+ReleaseNETObject[ipcon]

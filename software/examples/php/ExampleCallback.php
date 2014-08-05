@@ -11,12 +11,12 @@ const PORT = 4223;
 const UID = 'abc'; // Change to your UID
 
 // Callback function for color
-function cb_color($r, $g, $b, $C)
+function cb_color($r, $g, $b, $cl)
 {
     echo "Color(R): " . $r ."\n";
     echo "Color(G): " . $g ."\n";
     echo "Color(B): " . $b ."\n";
-    echo "Color(C): " . $C ."\n";
+    echo "Color(C): " . $cl ."\n";
     echo "\n";
 }
 
@@ -32,7 +32,7 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 $c->setColorCallbackPeriod(1000);
 
 // Register color callback to function cb_color
-$c->registerCallback(BrickletColor::CALLBACK_COLOR  , 'cb_color');
+$c->registerCallback(BrickletColor::CALLBACK_COLOR, 'cb_color');
 
 echo "Press ctrl+c to exit\n";
 $ipcon->dispatchCallbacks(-1); // Dispatch callbacks forever

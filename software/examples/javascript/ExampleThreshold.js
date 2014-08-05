@@ -23,18 +23,18 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
         // GREEN greater than 200
         // BLUE  greater than 300
         // CLEAR greater than 400
-        c.setColorCallbackThreshold('>', 0, 100, 0, 200, 0, 300, 0, 400);
+        c.setColorCallbackThreshold('>', 100, 0, 200, 0, 300, 0, 400, 0);
     }
 );
 
 // Register threshold reached callback
 c.on(Tinkerforge.BrickletColor.CALLBACK_COLOR_REACHED,
     // Callback for color threshold reached
-    function(r, g, b, C) {
+    function(r, g, b, cl) {
         console.log('Color(R): '+r);
         console.log('Color(G): '+g);
         console.log('Color(B): '+b);
-        console.log('Color(C): '+C);
+        console.log('Color(C): '+cl);
         console.log();
     }
 );

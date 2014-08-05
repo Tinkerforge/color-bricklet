@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 
 #include "ip_connection.h"
@@ -12,10 +11,10 @@
 void cb_color(uint16_t r, uint16_t g, uint16_t b, uint16_t c, void *user_data) {
 	(void)user_data; // avoid unused parameter warning
 
-	printf("Color(R) = %d.\n", r);
-    printf("Color(G) = %d.\n", g);
-    printf("Color(B) = %d.\n", b);
-    printf("Color(C) = %d.\n", c);
+	printf("Color(R): %u\n", r);
+	printf("Color(G): %u\n", g);
+	printf("Color(B): %u\n", b);
+	printf("Color(C): %u\n", c);
 	printf("\n");
 }
 
@@ -26,7 +25,7 @@ int main() {
 
 	// Create device object
 	Color c;
-	color_create(&c, UID, &ipcon); 
+	color_create(&c, UID, &ipcon);
 
 	// Connect to brickd
 	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {
@@ -36,15 +35,15 @@ int main() {
 	// Don't use device before ipcon is connected
 
 	// Set Period for color callback to 1s (1000ms)
-	// Note: The callback is only called every second if the 
+	// Note: The callback is only called every second if the
 	//       color has changed since the last call!
 	color_set_color_callback_period(&c, 1000);
 
 	// Register color callback to function cb_color
 	color_register_callback(&c,
-	                              COLOR_CALLBACK_COLOR, 
-	                              (void *)cb_color,
-	                              NULL);
+	                        COLOR_CALLBACK_COLOR,
+	                        (void *)cb_color,
+	                        NULL);
 
 	printf("Press key to exit\n");
 	getchar();

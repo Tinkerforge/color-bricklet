@@ -19,8 +19,10 @@ Module ExampleSimple
         Dim cl As Short
         c.GetColor(r, g, b, cl)
 
-        System.Console.WriteLine("Color(R, G, B, C): " + r.ToString() _
-        + ", " + g.ToString() + ", " + b.ToString() + ", " + cl.ToString())
+        System.Console.WriteLine("Color(R): " + r.ToString())
+        System.Console.WriteLine("Color(G): " + g.ToString())
+        System.Console.WriteLine("Color(B): " + b.ToString())
+        System.Console.WriteLine("Color(C): " + cl.ToString())
 
         System.Console.WriteLine("Press key to exit")
         System.Console.ReadKey()

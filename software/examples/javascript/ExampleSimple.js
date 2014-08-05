@@ -18,11 +18,11 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
     function(connectReason) {
         // Get current color
         c.getColor(
-            function(r, g, b, C) {
+            function(r, g, b, cl) {
                 console.log('Color(R): '+r);
                 console.log('Color(G): '+g);
                 console.log('Color(B): '+b);
-                console.log('Color(C): '+C);
+                console.log('Color(C): '+cl);
                 console.log();
             },
             function(error) {

@@ -33,7 +33,7 @@
                 var c = new Tinkerforge.BrickletColor(UID, ipcon);// Create device object
                 ipcon.connect(HOST, PORT,
                     function(error) {
-                        textArea.value += 'Error: '+error+ '\n';        
+                        textArea.value += 'Error: '+error+ '\n';
                     }
                 );// Connect to brickd
 
@@ -47,17 +47,17 @@
                         // GREEN greater than 200
                         // BLUE  greater than 300
                         // CLEAR greater than 400
-                        c.setColorCallbackThreshold('>', 0, 100, 0, 200, 0, 300, 0, 400);       
+                        c.setColorCallbackThreshold('>', 100, 0, 200, 0, 300, 0, 400, 0);
                     }
                 );
                 // Register threshold reached callback
                 c.on(Tinkerforge.BrickletColor.CALLBACK_COLOR_REACHED,
                     // Callback for color threshold reached
-                    function(r, g, b, C) {
-                        textArea.value += 'Color(R): '+r;
-                        textArea.value += 'Color(G): '+g;
-                        textArea.value += 'Color(B): '+b;
-                        textArea.value += 'Color(C): '+c;
+                    function(r, g, b, cl) {
+                        textArea.value += 'Color(R): '+r+'\n';
+                        textArea.value += 'Color(G): '+g+'\n';
+                        textArea.value += 'Color(B): '+b+'\n';
+                        textArea.value += 'Color(C): '+cl+'\n';
                         textArea.value += '\n';
                         textArea.scrollTop = textArea.scrollHeight;
                     }

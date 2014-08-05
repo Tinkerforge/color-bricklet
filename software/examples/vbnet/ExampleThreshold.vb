@@ -5,12 +5,13 @@ Module ExampleSimple
     Const PORT As Integer = 4223
     Const UID As String = "abc" ' Change to your UID
 
-    ' Callback for humidity outside of 30 to 60 %RH
+    ' Callback for color threshold reached
     Sub ReachedCB(ByVal sender As BrickletColor, ByVal r As Integer, _
                   ByVal g As Integer, ByVal b As Integer, ByVal cl As Integer)
-        
-        System.Console.WriteLine("Color(R, G, B, C): " + r.ToString() _
-        + ", " + g.ToString() + ", " + b.ToString() + ", " + cl.ToString())
+        System.Console.WriteLine("Color(R): " + r.ToString())
+        System.Console.WriteLine("Color(G): " + g.ToString())
+        System.Console.WriteLine("Color(B): " + b.ToString())
+        System.Console.WriteLine("Color(C): " + cl.ToString())
         System.Console.WriteLine("")
     End Sub
 
@@ -32,7 +33,7 @@ Module ExampleSimple
         ' GREEN greater than 200
         ' BLUE  greater than 300
         ' CLEAR greater than 400
-        c.SetColorCallbackThreshold(">"C, 0, 100, 0, 200, 0, 300, 0, 400)
+        c.SetColorCallbackThreshold(">"C, 100, 0, 200, 0, 300, 0, 400, 0)
 
         System.Console.WriteLine("Press key to exit")
         System.Console.ReadKey()
