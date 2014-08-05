@@ -29,7 +29,7 @@ $ipcon->connect(&HOST, &PORT); # Connect to brickd
 $c->set_debounce_period(10000);
 
 # Register threshold reached callback to function cb_reached
-$c->register_callback($col->CALLBACK_COLOR_REACHED, 'cb_reached');
+$c->register_callback($c->CALLBACK_COLOR_REACHED, 'cb_reached');
 
 # Configure threshold for color values,
 # RED   greater than 100
