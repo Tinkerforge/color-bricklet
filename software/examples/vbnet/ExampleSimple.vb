@@ -12,11 +12,12 @@ Module ExampleSimple
         ipcon.Connect(HOST, PORT) ' Connect to brickd
         ' Don't use device before ipcon is connected
 
-        ' Get current colot (in RGBC)
-        Dim r As Short
-        Dim g As Short
-        Dim b As Short
-        Dim cl As Short
+        ' Get current color
+        Dim r As Integer
+        Dim g As Integer
+        Dim b As Integer
+        Dim cl As Integer
+
         c.GetColor(r, g, b, cl)
 
         System.Console.WriteLine("Color(R): " + r.ToString())
