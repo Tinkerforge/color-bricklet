@@ -15,10 +15,7 @@ class Example
 		// Don't use device before ipcon is connected
 
 		// Get current color
-		int r;
-		int g;
-		int b;
-		int cl;
+		int r; int g; int b; int cl;
 		c.GetColor(out r, out g, out b, out cl);
 
 		System.Console.WriteLine("Color(R): " + r);

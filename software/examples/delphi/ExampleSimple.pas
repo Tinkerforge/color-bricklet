@@ -36,7 +36,7 @@ begin
   ipcon.Connect(HOST, PORT);
   { Don't use device before ipcon is connected }
 
-  { Get current color (in RGBC) }
+  { Get current color }
   c.GetColor(r, g, b, cl);
   WriteLn(Format('Color(R): %u', [r]));
   WriteLn(Format('Color(G): %u', [g]));

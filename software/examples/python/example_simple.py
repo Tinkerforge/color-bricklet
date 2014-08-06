@@ -15,7 +15,7 @@ if __name__ == "__main__":
     ipcon.connect(HOST, PORT) # Connect to brickd
     # Don't use device before ipcon is connected
 
-    # Get current color(in RGBC)
+    # Get current color
     color = c.get_color()
 
     print('Color(R): ' + str(color.r))

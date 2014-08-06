@@ -23,11 +23,8 @@ int main() {
 	}
 	// Don't use device before ipcon is connected
 
-	// Get current color in RGBC
-	uint16_t r;
-	uint16_t g;
-	uint16_t b;
-	uint16_t cl;
+	// Get current color
+	uint16_t r; uint16_t g; uint16_t b; uint16_t cl;
 	if(color_get_color(&c, &r, &g, &b, &cl) < 0) {
 		fprintf(stderr, "Could not get value, probably timeout\n");
 		exit(1);

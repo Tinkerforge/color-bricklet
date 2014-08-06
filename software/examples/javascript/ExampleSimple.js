@@ -2,16 +2,16 @@ var Tinkerforge = require('tinkerforge');
 
 var HOST = 'localhost';
 var PORT = 4223;
-var UID = 'abc';// Change to your UID
+var UID = 'abc'; // Change to your UID
 
-var ipcon = new Tinkerforge.IPConnection();// Create IP connection
-var c = new Tinkerforge.BrickletColor(UID, ipcon);// Create device object
+var ipcon = new Tinkerforge.IPConnection(); // Create IP connection
+var c = new Tinkerforge.BrickletColor(UID, ipcon); // Create device object
 
 ipcon.connect(HOST, PORT,
     function(error) {
         console.log('Error: '+error);
     }
-);// Connect to brickd
+); // Connect to brickd
 
 // Don't use device before ipcon is connected
 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,

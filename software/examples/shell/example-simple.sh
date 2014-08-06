@@ -4,5 +4,5 @@
 # change to your UID
 uid=abc
 
-# get current color (in RGBC)
+# get current color
 tinkerforge call color-bricklet $uid get-color
