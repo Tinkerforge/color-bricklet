@@ -128,6 +128,9 @@
 
 #define COLOR_TEMPERATURE_MUL_N 0xFFFF
 
+#define LIGHT_ON  0
+#define LIGHT_OFF 1
+
 typedef struct {
     uint8_t config_gain;
     uint8_t config_integration_time;

@@ -228,7 +228,7 @@ void is_light_on(const ComType com, const IsLightOn *data) {
     IsLightOnReturn ilor;
 	ilor.header        = data->header;
 	ilor.header.length = sizeof(IsLightOnReturn);
-	ilor.light         = PIN_LED.pio->PIO_PDSR & PIN_LED.mask ? 0 : 1;
+	ilor.light         = PIN_LED.pio->PIO_PDSR & PIN_LED.mask ? LIGHT_ON : LIGHT_OFF;
 
 	BA->send_blocking_with_timeout(&ilor, sizeof(IsLightOnReturn), com);
 }
