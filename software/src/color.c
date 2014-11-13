@@ -337,9 +337,9 @@ void calculate_color_temperature_and_illuminance() {
 	BC_local->illuminance_last_value = BC_local->illuminance_current_value;
 	BC_local->color_temperature_last_value = BC_local->color_temperature_current_value;
 
-	const uint16_t value_r = BC_local->last_value1[SIMPLE_UNIT_COLOR];
-	const uint16_t value_g = BC_local->last_value2[SIMPLE_UNIT_COLOR];
-	const uint16_t value_b = BC_local->last_value3[SIMPLE_UNIT_COLOR];
+	const uint16_t value_r = BC_local->value1[SIMPLE_UNIT_COLOR];
+	const uint16_t value_g = BC_local->value2[SIMPLE_UNIT_COLOR];
+	const uint16_t value_b = BC_local->value3[SIMPLE_UNIT_COLOR];
 
 	if(BC_local->color_temperature_last_value_r == value_r &&
 	   BC_local->color_temperature_last_value_g == value_g &&
