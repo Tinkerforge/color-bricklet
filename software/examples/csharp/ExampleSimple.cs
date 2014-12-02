@@ -24,8 +24,8 @@ class Example
 		System.Console.WriteLine("Color(C): " + cl);
 		System.Console.WriteLine("");
 
-		System.Console.WriteLine("Press key to exit");
-		System.Console.ReadKey();
+		System.Console.WriteLine("Press enter to exit");
+		System.Console.ReadLine();
 		ipcon.Disconnect();
 	}
 }
