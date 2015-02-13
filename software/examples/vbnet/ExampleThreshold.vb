@@ -36,7 +36,7 @@ Module ExampleSimple
         c.SetColorCallbackThreshold(">"C, 100, 0, 200, 0, 300, 0, 400, 0)
 
         System.Console.WriteLine("Press key to exit")
-        System.Console.ReadKey()
+        System.Console.ReadLine()
         ipcon.Disconnect()
     End Sub
 End Module
