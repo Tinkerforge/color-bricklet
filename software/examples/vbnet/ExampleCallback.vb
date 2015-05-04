@@ -1,6 +1,6 @@
 Imports Tinkerforge
 
-Module ExampleSimple
+Module ExampleCallback
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
     Const UID As String = "abc" ' Change to your UID

@@ -29,7 +29,7 @@ function matlab_example_threshold()
     ipcon.disconnect();
 end
 
-% Callback for illuminance greater than 200 Lux
+% Callback for threshold reached
 function cb_reached(e)
     fprintf('Color(R): %g\n', e.r);
     fprintf('Color(G): %g\n', e.g);
