@@ -23,7 +23,6 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
                 console.log('Color(G): '+g);
                 console.log('Color(B): '+b);
                 console.log('Color(C): '+cl);
-                console.log();
             },
             function(error) {
                 console.log('Error: '+error);
@@ -39,4 +38,3 @@ process.stdin.on('data',
         process.exit(0);
     }
 );
-

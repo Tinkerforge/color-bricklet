@@ -20,7 +20,6 @@ print "Color(R): $r\n";
 print "Color(G): $g\n";
 print "Color(B): $b\n";
 print "Color(C): $cl\n";
-print "\n";
 
 print "Press any key to exit...\n";
 <STDIN>;

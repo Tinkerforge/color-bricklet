@@ -23,7 +23,6 @@ echo "Color(R): ".$color['r']."\n";
 echo "Color(G): ".$color['g']."\n";
 echo "Color(B): ".$color['b']."\n";
 echo "Color(C): ".$color['c']."\n";
-echo "\n";
 
 echo "Press key to exit\n";
 fgetc(fopen('php://stdin', 'r'));

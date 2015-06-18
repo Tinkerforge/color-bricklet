@@ -23,7 +23,6 @@ public class ExampleSimple {
 		System.out.println("Color(G): " + color.g);
 		System.out.println("Color(B): " + color.b);
 		System.out.println("Color(C): " + color.c);
-		System.out.println("");
 
 		System.out.println("Press key to exit"); System.in.read();
 		ipcon.disconnect();
