@@ -4,12 +4,12 @@ class Example
 {
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
-	private static string UID = "abc"; // Change to your UID
+	private static string UID = "XYZ"; // Change to your UID
 
 	static void Main()
 	{
-		IPConnection ipcon = new Tinkerforge.IPConnection(); // Create IP connection
-		BrickletColor c = new Tinkerforge.BrickletColor(UID, ipcon); // Create device object
+		IPConnection ipcon = new IPConnection(); // Create IP connection
+		BrickletColor c = new BrickletColor(UID, ipcon); // Create device object
 
 		ipcon.Connect(HOST, PORT); // Connect to brickd
 		// Don't use device before ipcon is connected

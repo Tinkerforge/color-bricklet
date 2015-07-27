@@ -4,7 +4,7 @@ class Example
 {
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
-	private static string UID = "abc"; // Change to your UID
+	private static string UID = "XYZ"; // Change to your UID
 
 	// Callback function for color callback
 	static void ColorCB(BrickletColor sender, int r, int g, int b, int cl)

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-  
+# -*- coding: utf-8 -*-
 
 HOST = "localhost"
 PORT = 4223
-UID = "abc" # Change to your UID
+UID = "XYZ" # Change to your UID
 
 from tinkerforge.ip_connection import IPConnection
 from tinkerforge.bricklet_color import Color
@@ -30,6 +30,6 @@ if __name__ == "__main__":
 
     # Register color callback to function cb_color
     c.register_callback(c.CALLBACK_COLOR, cb_color)
-    
+
     raw_input('Press key to exit\n') # Use input() in Python 3
     ipcon.disconnect()

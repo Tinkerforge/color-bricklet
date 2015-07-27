@@ -5,7 +5,7 @@
 
 #define HOST "localhost"
 #define PORT 4223
-#define UID "abc" // Change to your UID
+#define UID "XYZ" // Change to your UID
 
 // Callback for color threshold reached
 void cb_reached(uint16_t r, uint16_t g, uint16_t b, uint16_t c, void *user_data) {
