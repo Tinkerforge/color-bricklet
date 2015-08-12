@@ -7,7 +7,7 @@
 #define PORT 4223
 #define UID "XYZ" // Change to your UID
 
-int main() {
+int main(void) {
 	// Create IP connection
 	IPConnection ipcon;
 	ipcon_create(&ipcon);
@@ -19,7 +19,7 @@ int main() {
 	// Connect to brickd
 	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {
 		fprintf(stderr, "Could not connect\n");
-		exit(1);
+		return 1;
 	}
 	// Don't use device before ipcon is connected
 
@@ -27,7 +27,7 @@ int main() {
 	uint16_t r; uint16_t g; uint16_t b; uint16_t cl;
 	if(color_get_color(&c, &r, &g, &b, &cl) < 0) {
 		fprintf(stderr, "Could not get value, probably timeout\n");
-		exit(1);
+		return 1;
 	}
 
 	printf("Color(R): %u\n", r);
@@ -39,4 +39,5 @@ int main() {
 	printf("Press key to exit\n");
 	getchar();
 	ipcon_destroy(&ipcon); // Calls ipcon_disconnect internally
+	return 0;
 }
