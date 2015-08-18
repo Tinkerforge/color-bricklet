@@ -3,7 +3,7 @@ Imports Tinkerforge
 Module ExampleCallback
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
-    Const UID As String = "abc" ' Change to your UID
+    Const UID As String = "XYZ" ' Change to your UID
 
     ' Callback function for color callback
     Sub ColorCB(ByVal sender As BrickletColor, ByVal r As Integer, _
