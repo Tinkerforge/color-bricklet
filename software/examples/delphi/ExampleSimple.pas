@@ -24,7 +24,7 @@ var
   e: TExample;
 
 procedure TExample.Execute;
-var r, g, b, cl: word;
+var r, g, b, c_: word;
 begin
   { Create IP connection }
   ipcon := TIPConnection.Create;
@@ -37,11 +37,12 @@ begin
   { Don't use device before ipcon is connected }
 
   { Get current color }
-  c.GetColor(r, g, b, cl);
-  WriteLn(Format('Color(R): %u', [r]));
-  WriteLn(Format('Color(G): %u', [g]));
-  WriteLn(Format('Color(B): %u', [b]));
-  WriteLn(Format('Color(C): %u', [cl]));
+  c.GetColor(r, g, b, c_);
+
+  WriteLn(Format('Color[R]: %d', [r]));
+  WriteLn(Format('Color[G]: %d', [g]));
+  WriteLn(Format('Color[B]: %d', [b]));
+  WriteLn(Format('Color[C]: %d', [c_]));
 
   WriteLn('Press key to exit');
   ReadLn;

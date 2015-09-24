@@ -1,3 +1,4 @@
+Imports System
 Imports Tinkerforge
 
 Module ExampleCallback
@@ -5,14 +6,13 @@ Module ExampleCallback
     Const PORT As Integer = 4223
     Const UID As String = "XYZ" ' Change to your UID
 
-    ' Callback function for color callback
-    Sub ColorCB(ByVal sender As BrickletColor, ByVal r As Integer, _
-                ByVal g As Integer, ByVal b As Integer, ByVal cl As Integer)
-        System.Console.WriteLine("Color(R): " + r.ToString())
-        System.Console.WriteLine("Color(G): " + g.ToString())
-        System.Console.WriteLine("Color(B): " + b.ToString())
-        System.Console.WriteLine("Color(C): " + cl.ToString())
-        System.Console.WriteLine("")
+    ' Callback subroutine for color callback
+    Sub ColorCB(ByVal sender As BrickletColor, ByVal r As Integer, ByVal g As Integer, ByVal b As Integer, ByVal c As Integer)
+        Console.WriteLine("Color[R]: " + r.ToString())
+        Console.WriteLine("Color[G]: " + g.ToString())
+        Console.WriteLine("Color[B]: " + b.ToString())
+        Console.WriteLine("Color[C]: " + c.ToString())
+        Console.WriteLine("")
     End Sub
 
     Sub Main()
@@ -22,16 +22,16 @@ Module ExampleCallback
         ipcon.Connect(HOST, PORT) ' Connect to brickd
         ' Don't use device before ipcon is connected
 
-        ' Set Period for color callback to 1s (1000ms)
-        ' Note: The color callback is only called every second if the 
-        '       color has changed since the last call!
-        c.SetColorCallbackPeriod(1000)
-
-        ' Register color callback to function ColorCB
+        ' Register color callback to subroutine ColorCB
         AddHandler c.Color, AddressOf ColorCB
 
-        System.Console.WriteLine("Press key to exit")
-        System.Console.ReadLine()
+        ' Set period for color callback to 1s (1000ms)
+        ' Note: The color callback is only called every second
+        '       if the color has changed since the last call!
+        c.SetColorCallbackPeriod(1000)
+
+        Console.WriteLine("Press key to exit")
+        Console.ReadLine()
         ipcon.Disconnect()
     End Sub
 End Module

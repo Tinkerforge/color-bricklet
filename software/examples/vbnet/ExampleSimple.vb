@@ -1,3 +1,4 @@
+Imports System
 Imports Tinkerforge
 
 Module ExampleSimple
@@ -16,17 +17,17 @@ Module ExampleSimple
         Dim r As Integer
         Dim g As Integer
         Dim b As Integer
-        Dim cl As Integer
+        Dim c_ As Integer
 
-        c.GetColor(r, g, b, cl)
+        c.GetColor(r, g, b, c_)
 
-        System.Console.WriteLine("Color(R): " + r.ToString())
-        System.Console.WriteLine("Color(G): " + g.ToString())
-        System.Console.WriteLine("Color(B): " + b.ToString())
-        System.Console.WriteLine("Color(C): " + cl.ToString())
+        Console.WriteLine("Color[R]: " + r.ToString())
+        Console.WriteLine("Color[G]: " + g.ToString())
+        Console.WriteLine("Color[B]: " + b.ToString())
+        Console.WriteLine("Color[C]: " + c_.ToString())
 
-        System.Console.WriteLine("Press key to exit")
-        System.Console.ReadLine()
+        Console.WriteLine("Press key to exit")
+        Console.ReadLine()
         ipcon.Disconnect()
     End Sub
 End Module

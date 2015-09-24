@@ -1,8 +1,7 @@
 #!/bin/sh
-# connects to localhost:4223 by default, use --host and --port to change it
+# Connects to localhost:4223 by default, use --host and --port to change this
 
-# change to your UID
-uid=abc
+uid=XYZ # Change to your UID
 
-# get current color
+# Get current color
 tinkerforge call color-bricklet $uid get-color

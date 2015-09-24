@@ -14,13 +14,13 @@ $ipcon->connect(&HOST, &PORT); # Connect to brickd
 # Don't use device before ipcon is connected
 
 # Get current color
-my ($r, $g, $b, $cl) = $c->get_color();
+my ($r, $g, $b, $c_) = $c->get_color();
 
-print "Color(R): $r\n";
-print "Color(G): $g\n";
-print "Color(B): $b\n";
-print "Color(C): $cl\n";
+print "Color[R]: $r\n";
+print "Color[G]: $g\n";
+print "Color[B]: $b\n";
+print "Color[C]: $c_\n";
 
-print "Press any key to exit...\n";
+print "Press key to exit\n";
 <STDIN>;
 $ipcon->disconnect();

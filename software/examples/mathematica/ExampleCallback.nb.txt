@@ -3,32 +3,32 @@ LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
 
 host="localhost"
 port=4223
-uid="abc"(* Change to your UID *)
+uid="XYZ"(*Change to your UID*)
 
-(* Create IPConnection and device object *)
+(*Create IPConnection and device object*)
 ipcon=NETNew["Tinkerforge.IPConnection"]
 c=NETNew["Tinkerforge.BrickletColor",uid,ipcon]
 ipcon@Connect[host,port]
 
-(* Set Period for color callback to 1s (1000ms) *)
-(* Note: The color callback is only called every second if the *)
-(*       color has changed since the last call! *)
-c@SetColorCallbackPeriod[1000]
-
-(* Callback function for color callback *)
-ColorCB[sender_,r_,g_,b_,cl_]:=
+(*Callback function for color callback*)
+ColorCB[sender_,r_,g_,b_,c_]:=
  Module[{},
-  Print["Color(R): "<>ToString[N[r]]];
-  Print["Color(G): "<>ToString[N[g]]];
-  Print["Color(B): "<>ToString[N[b]]];
-  Print["Color(C): "<>ToString[N[cl]]]
+  Print["Color[R]: "<>ToString[r]];
+  Print["Color[G]: "<>ToString[g]];
+  Print["Color[B]: "<>ToString[b]];
+  Print["Color[C]: "<>ToString[c]]
  ]
 
 AddEventHandler[c@Color,ColorCB]
 
+(*Set period for color callback to 1s (1000ms)*)
+(*Note: The color callback is only called every second*)
+(*if the color has changed since the last call!*)
+c@SetColorCallbackPeriod[1000]
+
 Input["Click OK to exit"]
 
-(* Clean up *)
+(*Clean up*)
 ipcon@Disconnect[]
 ReleaseNETObject[c]
 ReleaseNETObject[ipcon]

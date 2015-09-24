@@ -8,15 +8,15 @@ use Tinkerforge\BrickletColor;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = 'abc'; // Change to your UID
+const UID = 'XYZ'; // Change to your UID
 
-// Callback for color threshold reached
-function cb_reached($r, $g, $b, $cl)
+// Callback function for color reached callback
+function cb_colorReached($r, $g, $b, $c)
 {
-    echo "Color(R): " . $r ."\n";
-    echo "Color(G): " . $g ."\n";
-    echo "Color(B): " . $b ."\n";
-    echo "Color(C): " . $cl ."\n";
+    echo "Color[R]: $r\n";
+    echo "Color[G]: $g\n";
+    echo "Color[B]: $b\n";
+    echo "Color[C]: $c\n";
     echo "\n";
 }
 
@@ -29,14 +29,10 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 // Get threshold callbacks with a debounce time of 10 seconds (10000ms)
 $c->setDebouncePeriod(10000);
 
-// Register threshold reached callback to function cb_reached
-$c->registerCallback(BrickletColor::CALLBACK_COLOR_REACHED, 'cb_reached');
+// Register color reached callback to function cb_colorReached
+$c->registerCallback(BrickletColor::CALLBACK_COLOR_REACHED, 'cb_colorReached');
 
-// Configure threshold for color values,
-// RED   greater than 100
-// GREEN greater than 200
-// BLUE  greater than 300
-// CLEAR greater than 400
+// Configure threshold for color "greater than 100, 200, 300, 400"
 $c->setColorCallbackThreshold('>', 100, 0, 200, 0, 300, 0, 400, 0);
 
 echo "Press ctrl+c to exit\n";

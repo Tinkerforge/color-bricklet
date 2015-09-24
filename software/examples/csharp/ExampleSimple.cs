@@ -1,3 +1,4 @@
+using System;
 using Tinkerforge;
 
 class Example
@@ -15,17 +16,16 @@ class Example
 		// Don't use device before ipcon is connected
 
 		// Get current color
-		int r; int g; int b; int cl;
-		c.GetColor(out r, out g, out b, out cl);
+		int r, g, b, c_;
+		c.GetColor(out r, out g, out b, out c_);
 
-		System.Console.WriteLine("Color(R): " + r);
-		System.Console.WriteLine("Color(G): " + g);
-		System.Console.WriteLine("Color(B): " + b);
-		System.Console.WriteLine("Color(C): " + cl);
-		System.Console.WriteLine("");
+		Console.WriteLine("Color[R]: " + r);
+		Console.WriteLine("Color[G]: " + g);
+		Console.WriteLine("Color[B]: " + b);
+		Console.WriteLine("Color[C]: " + c_);
 
-		System.Console.WriteLine("Press enter to exit");
-		System.Console.ReadLine();
+		Console.WriteLine("Press enter to exit");
+		Console.ReadLine();
 		ipcon.Disconnect();
 	}
 }

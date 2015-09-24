@@ -8,7 +8,7 @@ use Tinkerforge\BrickletColor;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = 'abc'; // Change to your UID
+const UID = 'XYZ'; // Change to your UID
 
 $ipcon = new IPConnection(); // Create IP connection
 $c = new BrickletColor(UID, $ipcon); // Create device object
@@ -19,10 +19,10 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 // Get current color
 $color = $c->getColor();
 
-echo "Color(R): ".$color['r']."\n";
-echo "Color(G): ".$color['g']."\n";
-echo "Color(B): ".$color['b']."\n";
-echo "Color(C): ".$color['c']."\n";
+echo "Color[R]: " . $color['r'] . "\n";
+echo "Color[G]: " . $color['g'] . "\n";
+echo "Color[B]: " . $color['b'] . "\n";
+echo "Color[C]: " . $color['c'] . "\n";
 
 echo "Press key to exit\n";
 fgetc(fopen('php://stdin', 'r'));

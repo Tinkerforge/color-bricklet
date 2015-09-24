@@ -3,7 +3,7 @@ function octave_example_simple()
 
     HOST = "localhost";
     PORT = 4223;
-    UID = "abc"; % Change to your UID
+    UID = "XYZ"; % Change to your UID
 
     ipcon = java_new("com.tinkerforge.IPConnection"); % Create IP connection
     c = java_new("com.tinkerforge.BrickletColor", UID, ipcon); % Create device object
@@ -13,11 +13,12 @@ function octave_example_simple()
 
     % Get current color
     color = c.getColor();
-    fprintf("Color(R): %g\n", color.r);
-    fprintf("Color(G): %g\n", color.g);
-    fprintf("Color(B): %g\n", color.b);
-    fprintf("Color(C): %g\n", color.c);
 
-    input("Press any key to exit...\n", "s");
+    fprintf("Color[R]: %d\n", color.r);
+    fprintf("Color[G]: %d\n", color.g);
+    fprintf("Color[B]: %d\n", color.b);
+    fprintf("Color[C]: %d\n", color.c);
+
+    input("Press key to exit\n", "s");
     ipcon.disconnect();
 end

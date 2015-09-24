@@ -12,8 +12,8 @@ type
     ipcon: TIPConnection;
     c: TBrickletColor;
   public
-    procedure ReachedCB(sender: TBrickletColor; const r: Word; const g: Word;
-                        const b: Word; const cl: Word);
+    procedure ColorReachedCB(sender: TBrickletColor;
+                             const r: word; const g: word; const b: word; const c_: word);
     procedure Execute;
   end;
 
@@ -25,15 +25,15 @@ const
 var
   e: TExample;
 
-{ Callback for color threshold reached }
-procedure TExample.ReachedCB(sender: TBrickletColor; const r: word;
-                             const g: word; const b: word; const cl: word);
+{ Callback procedure for color reached callback }
+procedure TExample.ColorReachedCB(sender: TBrickletColor;
+                                  const r: word; const g: word; const b: word; const c_: word);
 begin
-    WriteLn(Format('Color(R): %u', [r]));
-    WriteLn(Format('Color(G): %u', [g]));
-    WriteLn(Format('Color(B): %u', [b]));
-    WriteLn(Format('Color(C): %u', [cl]));
-    WriteLn('');
+  WriteLn(Format('Color[R]: %d', [r]));
+  WriteLn(Format('Color[G]: %d', [g]));
+  WriteLn(Format('Color[B]: %d', [b]));
+  WriteLn(Format('Color[C]: %d', [c_]));
+  WriteLn('');
 end;
 
 procedure TExample.Execute;
@@ -51,14 +51,10 @@ begin
   { Get threshold callbacks with a debounce time of 10 seconds (10000ms) }
   c.SetDebouncePeriod(10000);
 
-  { Register threshold reached callback to procedure ReachedCB }
-  c.OnColorReached := {$ifdef FPC}@{$endif}ReachedCB;
+  { Register color reached callback to procedure ColorReachedCB }
+  c.OnColorReached := {$ifdef FPC}@{$endif}ColorReachedCB;
 
-  { Configure threshold for color values,
-    RED  : greater than 100
-    GREEN: greater than 200
-    BLUE : greater than 300
-    CLEAR: greater than 400 }
+  { Configure threshold for color "greater than 100, 200, 300, 400" }
   c.SetColorCallbackThreshold('>', 100, 0, 200, 0, 300, 0, 400, 0);
 
   WriteLn('Press key to exit');

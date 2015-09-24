@@ -4,7 +4,7 @@ function matlab_example_simple()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = 'abc'; % Change to your UID
+    UID = 'XYZ'; % Change to your UID
 
     ipcon = IPConnection(); % Create IP connection
     c = BrickletColor(UID, ipcon); % Create device object
@@ -14,11 +14,12 @@ function matlab_example_simple()
 
     % Get current color
     color = c.getColor();
-    fprintf('Color(R): %g\n', color.r);
-    fprintf('Color(G): %g\n', color.g);
-    fprintf('Color(B): %g\n', color.b);
-    fprintf('Color(C): %g\n', color.c);
 
-    input('Press any key to exit...\n', 's');
+    fprintf('Color[R]: %i\n', color.r);
+    fprintf('Color[G]: %i\n', color.g);
+    fprintf('Color[B]: %i\n', color.b);
+    fprintf('Color[C]: %i\n', color.c);
+
+    input('Press key to exit\n', 's');
     ipcon.disconnect();
 end

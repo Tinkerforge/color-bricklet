@@ -16,13 +16,12 @@ if __name__ == "__main__":
     # Don't use device before ipcon is connected
 
     # Get current color
-    color = c.get_color()
+    r, g, b, c_ = c.get_color()
 
-    print('Color(R): ' + str(color.r))
-    print('Color(G): ' + str(color.g))
-    print('Color(B): ' + str(color.b))
-    print('Color(C): ' + str(color.c))
-    print('')
+    print("Color[R]: " + str(r))
+    print("Color[G]: " + str(g))
+    print("Color[B]: " + str(b))
+    print("Color[C]: " + str(c_))
 
-    raw_input('Press key to exit\n') # Use input() in Python 3
+    raw_input("Press key to exit\n") # Use input() in Python 3
     ipcon.disconnect()

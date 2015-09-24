@@ -3,10 +3,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[         0,          0]
-NotebookDataLength[      5507,        130]
-NotebookOptionsPosition[      5074,        109]
-NotebookOutlinePosition[      5413,        124]
-CellTagsIndexPosition[      5370,        121]
+NotebookDataLength[      5341,        129]
+NotebookOptionsPosition[      4908,        108]
+NotebookOutlinePosition[      5247,        123]
+CellTagsIndexPosition[      5204,        120]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -23,66 +23,64 @@ Cell[BoxData[{
    3.600500538026902*^9, 3.600500561851948*^9}, {3.600506097634747*^9, 
    3.600506099012146*^9}, 3.600506136278721*^9, {3.60060805238198*^9, 
    3.600608117803465*^9}, 3.600685373189396*^9, {3.616222391351809*^9, 
-   3.616222406121827*^9}, {3.6162224638787603`*^9, 3.6162224946243467`*^9}}],
+   3.616222406121827*^9}, {3.6162224638787603`*^9, 3.6162224946243467`*^9}, {
+   3.652098316814307*^9, 3.652098317852353*^9}, 3.652098358690653*^9}],
 
 Cell[BoxData[{
- RowBox[{"host", "=", "\"\<localhost\>\""}], "\[IndentingNewLine]", 
- RowBox[{"port", "=", "4223"}], "\[IndentingNewLine]", 
+ RowBox[{"host", "=", "\"\<localhost\>\""}], "\n", 
+ RowBox[{"port", "=", "4223"}], "\n", 
  RowBox[{
-  RowBox[{"uid", "=", "\"\<abc\>\""}], 
-  RowBox[{"(*", " ", 
-   RowBox[{"Change", " ", "to", " ", "your", " ", "UID"}], " ", "*)"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]", 
-  RowBox[{"(*", " ", 
+  RowBox[{"uid", "=", "\"\<XYZ\>\""}], 
+  RowBox[{"(*", 
+   RowBox[{"Change", " ", "to", " ", "your", " ", "UID"}], "*)"}], "\n", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
    RowBox[{
    "Create", " ", "IPConnection", " ", "and", " ", "device", " ", "object"}], 
-   " ", "*)"}]}], "\[IndentingNewLine]", 
+   "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"ipcon", "=", 
   RowBox[{"NETNew", "[", "\"\<Tinkerforge.IPConnection\>\"", "]"}]}], "\n", 
  RowBox[{"c", "=", 
   RowBox[{"NETNew", "[", 
    RowBox[{"\"\<Tinkerforge.BrickletColor\>\"", ",", "uid", ",", "ipcon"}], 
-   "]"}]}], "\[IndentingNewLine]", 
+   "]"}]}], "\n", 
  RowBox[{
   RowBox[{"ipcon", "@", 
    RowBox[{"Connect", "[", 
-    RowBox[{"host", ",", "port"}], "]"}]}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{"host", ",", "port"}], "]"}]}], "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"r", "=", "0"}], ";", 
    RowBox[{"g", "=", "0"}], ";", 
    RowBox[{"b", "=", "0"}], ";", 
-   RowBox[{"cl", "=", "0"}]}], "\[IndentingNewLine]", "\n", 
-  RowBox[{"(*", " ", 
-   RowBox[{"Get", " ", "current", " ", "color"}], " ", "*)"}]}], "\n", 
- RowBox[{"c", "@", 
-  RowBox[{"GetColor", "[", 
-   RowBox[{"r", ",", "g", ",", "b", ",", "cl"}], 
-   "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"cU", "=", "0"}]}], "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Get", " ", "current", " ", "color"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"c", "@", 
+   RowBox[{"GetColor", "[", 
+    RowBox[{"r", ",", "g", ",", "b", ",", "cU"}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{"Print", "[", 
-  RowBox[{"\"\<Color(R): \>\"", "<>", 
-   RowBox[{"ToString", "[", 
-    RowBox[{"N", "[", "r", "]"}], "]"}]}], "]"}], "\[IndentingNewLine]", 
+  RowBox[{"\"\<Color[R]: \>\"", "<>", 
+   RowBox[{"ToString", "[", "r", "]"}]}], "]"}], "\n", 
  RowBox[{"Print", "[", 
-  RowBox[{"\"\<Color(G): \>\"", "<>", 
-   RowBox[{"ToString", "[", 
-    RowBox[{"N", "[", "g", "]"}], "]"}]}], "]"}], "\[IndentingNewLine]", 
+  RowBox[{"\"\<Color[G]: \>\"", "<>", 
+   RowBox[{"ToString", "[", "g", "]"}]}], "]"}], "\n", 
  RowBox[{"Print", "[", 
-  RowBox[{"\"\<Color(B): \>\"", "<>", 
-   RowBox[{"ToString", "[", 
-    RowBox[{"N", "[", "b", "]"}], "]"}]}], "]"}], "\[IndentingNewLine]", 
+  RowBox[{"\"\<Color[B]: \>\"", "<>", 
+   RowBox[{"ToString", "[", "b", "]"}]}], "]"}], "\n", 
  RowBox[{
   RowBox[{"Print", "[", 
-   RowBox[{"\"\<Color(C): \>\"", "<>", 
-    RowBox[{"ToString", "[", 
-     RowBox[{"N", "[", "cl", "]"}], "]"}]}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"\"\<Color[C]: \>\"", "<>", 
+    RowBox[{"ToString", "[", "cU", "]"}]}], "]"}], "\n", 
   "\[IndentingNewLine]", 
-  RowBox[{"(*", " ", 
-   RowBox[{"Clean", " ", "up"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Clean", " ", "up"}], "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"ipcon", "@", 
-  RowBox[{"Disconnect", "[", "]"}]}], "\[IndentingNewLine]", 
- RowBox[{"ReleaseNETObject", "[", "c", "]"}], "\[IndentingNewLine]", 
+  RowBox[{"Disconnect", "[", "]"}]}], "\n", 
+ RowBox[{"ReleaseNETObject", "[", "c", "]"}], "\n", 
  RowBox[{"ReleaseNETObject", "[", "ipcon", "]"}]}], "Input",
  CellChangeTimes->{{3.600075175574196*^9, 3.600075177574486*^9}, {
    3.600075518821967*^9, 3.60007554243471*^9}, {3.600075580562348*^9, 
@@ -105,10 +103,11 @@ Cell[BoxData[{
    3.600608950204666*^9}, {3.616220823466634*^9, 3.616220829230974*^9}, {
    3.6162211108211193`*^9, 3.6162211314193163`*^9}, {3.6162211945564613`*^9, 
    3.61622128134645*^9}, {3.616221877034163*^9, 3.6162218916339006`*^9}, 
-   3.616222458174696*^9, {3.6162224928047867`*^9, 3.61622249369626*^9}}]
+   3.616222458174696*^9, {3.6162224928047867`*^9, 3.61622249369626*^9}, 
+   3.652098281596525*^9, {3.6520983371476*^9, 3.6520983667861137`*^9}}]
 },
 WindowSize->{1521, 867},
-WindowMargins->{{Automatic, 122}, {77, Automatic}},
+WindowMargins->{{Automatic, 121}, {76, Automatic}},
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
 StyleDefinitions->"Default.nb"
 ]
@@ -123,8 +122,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[400, 13, 702, 12, 55, "Input"],
-Cell[1105, 27, 3965, 80, 495, "Input"]
+Cell[400, 13, 774, 13, 55, "Input"],
+Cell[1177, 28, 3727, 78, 517, "Input"]
 }
 ]
 *)

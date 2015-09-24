@@ -7,14 +7,14 @@
 #define PORT 4223
 #define UID "XYZ" // Change to your UID
 
-// Callback for color threshold reached
-void cb_reached(uint16_t r, uint16_t g, uint16_t b, uint16_t c, void *user_data) {
+// Callback function for color reached callback
+void cb_color_reached(uint16_t r, uint16_t g, uint16_t b, uint16_t c, void *user_data) {
 	(void)user_data; // avoid unused parameter warning
 
-	printf("Color(R): %u\n", r);
-	printf("Color(G): %u\n", g);
-	printf("Color(B): %u\n", b);
-	printf("Color(C): %u\n", c);
+	printf("Color[R]: %d\n", r);
+	printf("Color[G]: %d\n", g);
+	printf("Color[B]: %d\n", b);
+	printf("Color[C]: %d\n", c);
 	printf("\n");
 }
 
@@ -37,17 +37,13 @@ int main(void) {
 	// Get threshold callbacks with a debounce time of 10 seconds (10000ms)
 	color_set_debounce_period(&c, 10000);
 
-	// Register threshold reached callback to function cb_reached
+	// Register color reached callback to function cb_color_reached
 	color_register_callback(&c,
 	                        COLOR_CALLBACK_COLOR_REACHED,
-	                        (void *)cb_reached,
+	                        (void *)cb_color_reached,
 	                        NULL);
 
-	// Configure threshold for color values,
-	// RED   greater than 100
-	// GREEN greater than 200
-	// BLUE  greater than 300
-	// CLEAR greater than 400
+	// Configure threshold for color "greater than 100, 200, 300, 400"
 	color_set_color_callback_threshold(&c, '>', 100, 0, 200, 0, 300, 0, 400, 0);
 
 	printf("Press key to exit\n");

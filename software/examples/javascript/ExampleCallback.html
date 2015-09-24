@@ -26,35 +26,36 @@
                 textArea.value = "";
                 var HOST = document.getElementById("host").value;
                 var PORT = parseInt(document.getElementById("port").value);
-                var UID  = document.getElementById("uid").value;
+                var UID = document.getElementById("uid").value;
                 if(ipcon !== undefined) {
                     ipcon.disconnect();
                 }
-                ipcon = new Tinkerforge.IPConnection();// Create IP connection
-                var c = new Tinkerforge.BrickletColor(UID, ipcon);// Create device object
+                ipcon = new Tinkerforge.IPConnection(); // Create IP connection
+                var c = new Tinkerforge.BrickletColor(UID, ipcon); // Create device object
                 ipcon.connect(HOST, PORT,
                     function(error) {
-                        textArea.value += 'Error: '+error+ '\n';
+                        textArea.value += 'Error: ' + error + '\n';
                     }
-                );// Connect to brickd
-
+                ); // Connect to brickd
                 // Don't use device before ipcon is connected
+
                 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-                    function(connectReason) {
-                        // Set Period for color callback to 1s (1000ms)
-                        // Note: The callback is only called every second if the
-                        // color has changed since the last call!
+                    function (connectReason) {
+                        // Set period for color callback to 1s (1000ms)
+                        // Note: The color callback is only called every second
+                        //       if the color has changed since the last call!
                         c.setColorCallbackPeriod(1000);
                     }
                 );
+
                 // Register color callback
                 c.on(Tinkerforge.BrickletColor.CALLBACK_COLOR,
                     // Callback function for color callback
-                    function(r, g, b, cl) {
-                        textArea.value += 'Color(R): '+r+'\n';
-                        textArea.value += 'Color(G): '+g+'\n';
-                        textArea.value += 'Color(B): '+b+'\n';
-                        textArea.value += 'Color(C): '+cl+'\n';
+                    function (r, g, b, c) {
+                        textArea.value += 'Color[R]: ' + r + '\n';
+                        textArea.value += 'Color[G]: ' + g + '\n';
+                        textArea.value += 'Color[B]: ' + b + '\n';
+                        textArea.value += 'Color[C]: ' + c + '\n';
                         textArea.value += '\n';
                         textArea.scrollTop = textArea.scrollHeight;
                     }
@@ -63,4 +64,3 @@
         </script>
     </body>
 </html>
-

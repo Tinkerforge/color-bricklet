@@ -24,17 +24,16 @@ int main(void) {
 	// Don't use device before ipcon is connected
 
 	// Get current color
-	uint16_t r; uint16_t g; uint16_t b; uint16_t cl;
-	if(color_get_color(&c, &r, &g, &b, &cl) < 0) {
-		fprintf(stderr, "Could not get value, probably timeout\n");
+	uint16_t r, g, b, c_;
+	if(color_get_color(&c, &r, &g, &b, &c_) < 0) {
+		fprintf(stderr, "Could not get color, probably timeout\n");
 		return 1;
 	}
 
-	printf("Color(R): %u\n", r);
-	printf("Color(G): %u\n", g);
-	printf("Color(B): %u\n", b);
-	printf("Color(C): %u\n", cl);
-	printf("\n");
+	printf("Color[R]: %d\n", r);
+	printf("Color[G]: %d\n", g);
+	printf("Color[B]: %d\n", b);
+	printf("Color[C]: %d\n", c_);
 
 	printf("Press key to exit\n");
 	getchar();

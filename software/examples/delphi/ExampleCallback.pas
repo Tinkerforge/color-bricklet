@@ -12,8 +12,8 @@ type
     ipcon: TIPConnection;
     c: TBrickletColor;
   public
-    procedure ColorCB(sender: TBrickletColor; const r: Word; const g: Word;
-                      const b: Word; const cl: Word);
+    procedure ColorCB(sender: TBrickletColor;
+                      const r: word; const g: word; const b: word; const c_: word);
     procedure Execute;
   end;
 
@@ -25,15 +25,15 @@ const
 var
   e: TExample;
 
-{ Callback function for color callback }
-procedure TExample.ColorCB(sender: TBrickletColor; const r: Word;
-                           const g: Word; const b: Word; const cl: Word);
+{ Callback procedure for color callback }
+procedure TExample.ColorCB(sender: TBrickletColor;
+                           const r: word; const g: word; const b: word; const c_: word);
 begin
-    WriteLn(Format('Color(R): %u', [r]));
-    WriteLn(Format('Color(G): %u', [g]));
-    WriteLn(Format('Color(B): %u', [b]));
-    WriteLn(Format('Color(C): %u', [cl]));
-    WriteLn('');
+  WriteLn(Format('Color[R]: %d', [r]));
+  WriteLn(Format('Color[G]: %d', [g]));
+  WriteLn(Format('Color[B]: %d', [b]));
+  WriteLn(Format('Color[C]: %d', [c_]));
+  WriteLn('');
 end;
 
 procedure TExample.Execute;
@@ -48,13 +48,13 @@ begin
   ipcon.Connect(HOST, PORT);
   { Don't use device before ipcon is connected }
 
-  { Set Period for color callback to 1s (1000ms)
-    Note: The callback is only called every second if the
-          color has changed since the last call! }
-  c.SetColorCallbackPeriod(1000);
-
   { Register color callback to procedure ColorCB }
   c.OnColor := {$ifdef FPC}@{$endif}ColorCB;
+
+  { Set period for color callback to 1s (1000ms)
+    Note: The color callback is only called every second
+          if the color has changed since the last call! }
+  c.SetColorCallbackPeriod(1000);
 
   WriteLn('Press key to exit');
   ReadLn;

@@ -26,32 +26,31 @@
                 textArea.value = "";
                 var HOST = document.getElementById("host").value;
                 var PORT = parseInt(document.getElementById("port").value);
-                var UID  = document.getElementById("uid").value;
+                var UID = document.getElementById("uid").value;
                 if(ipcon !== undefined) {
                     ipcon.disconnect();
                 }
-                ipcon = new Tinkerforge.IPConnection();// Create IP connection
-                var c = new Tinkerforge.BrickletColor(UID, ipcon);// Create device object
+                ipcon = new Tinkerforge.IPConnection(); // Create IP connection
+                var c = new Tinkerforge.BrickletColor(UID, ipcon); // Create device object
                 ipcon.connect(HOST, PORT,
                     function(error) {
-                        textArea.value += 'Error: '+error+ '\n';
+                        textArea.value += 'Error: ' + error + '\n';
                     }
-                );// Connect to brickd
-
+                ); // Connect to brickd
                 // Don't use device before ipcon is connected
+
                 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-                    function(connectReason) {
+                    function (connectReason) {
                         // Get current color
                         c.getColor(
-                            function(r, g, b, cl) {
-                                textArea.value += 'Color(R): '+r+'\n';
-                                textArea.value += 'Color(G): '+g+'\n';
-                                textArea.value += 'Color(B): '+b+'\n';
-                                textArea.value += 'Color(C): '+cl+'\n';
-                                textArea.scrollTop = textArea.scrollHeight;
+                            function (r, g, b, c) {
+                                textArea.value += 'Color[R]: ' + r + '\n';
+                                textArea.value += 'Color[G]: ' + g + '\n';
+                                textArea.value += 'Color[B]: ' + b + '\n';
+                                textArea.value += 'Color[C]: ' + c + '\n';
                             },
-                            function(error) {
-                                textArea.value += 'Error: '+error+'\n';
+                            function (error) {
+                                textArea.value += 'Error: ' + error + '\n';
                             }
                         );
                     }
@@ -60,4 +59,3 @@
         </script>
     </body>
 </html>
-
