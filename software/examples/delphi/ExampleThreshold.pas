@@ -12,8 +12,8 @@ type
     ipcon: TIPConnection;
     c: TBrickletColor;
   public
-    procedure ColorReachedCB(sender: TBrickletColor;
-                             const r: word; const g: word; const b: word; const c_: word);
+    procedure ColorReachedCB(sender: TBrickletColor; const r: word; const g: word; const b: word;
+                             const c_: word);
     procedure Execute;
   end;
 
@@ -26,8 +26,8 @@ var
   e: TExample;
 
 { Callback procedure for color reached callback }
-procedure TExample.ColorReachedCB(sender: TBrickletColor;
-                                  const r: word; const g: word; const b: word; const c_: word);
+procedure TExample.ColorReachedCB(sender: TBrickletColor; const r: word; const g: word;
+                                  const b: word; const c_: word);
 begin
   WriteLn(Format('Color[R]: %d', [r]));
   WriteLn(Format('Color[G]: %d', [g]));
