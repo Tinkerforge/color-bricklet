@@ -5,7 +5,7 @@ use Tinkerforge::BrickletColor;
 
 use constant HOST => 'localhost';
 use constant PORT => 4223;
-use constant UID => 'XYZ'; # Change to your UID
+use constant UID => 'XYZ'; # Change XYZ to the UID of your Color Bricklet
 
 # Callback subroutine for color callback
 sub cb_color

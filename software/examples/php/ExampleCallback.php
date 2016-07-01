@@ -8,7 +8,7 @@ use Tinkerforge\BrickletColor;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = 'XYZ'; // Change to your UID
+const UID = 'XYZ'; // Change XYZ to the UID of your Color Bricklet
 
 // Callback function for color callback
 function cb_color($r, $g, $b, $c)

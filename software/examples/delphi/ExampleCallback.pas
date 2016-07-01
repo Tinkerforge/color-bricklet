@@ -20,14 +20,14 @@ type
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = 'XYZ'; { Change to your UID }
+  UID = 'XYZ'; { Change XYZ to the UID of your Color Bricklet }
 
 var
   e: TExample;
 
 { Callback procedure for color callback }
-procedure TExample.ColorCB(sender: TBrickletColor; const r: word; const g: word; const b: word;
-                           const c_: word);
+procedure TExample.ColorCB(sender: TBrickletColor; const r: word; const g: word;
+                           const b: word; const c_: word);
 begin
   WriteLn(Format('Color[R]: %d', [r]));
   WriteLn(Format('Color[G]: %d', [g]));

@@ -5,7 +5,7 @@
 
 #define HOST "localhost"
 #define PORT 4223
-#define UID "XYZ" // Change to your UID
+#define UID "XYZ" // Change XYZ to the UID of your Color Bricklet
 
 // Callback function for color callback
 void cb_color(uint16_t r, uint16_t g, uint16_t b, uint16_t c, void *user_data) {

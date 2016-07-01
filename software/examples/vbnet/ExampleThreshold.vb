@@ -4,11 +4,11 @@ Imports Tinkerforge
 Module ExampleThreshold
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
-    Const UID As String = "XYZ" ' Change to your UID
+    Const UID As String = "XYZ" ' Change XYZ to the UID of your Color Bricklet
 
     ' Callback subroutine for color reached callback
-    Sub ColorReachedCB(ByVal sender As BrickletColor, ByVal r As Integer, ByVal g As Integer, _
-                       ByVal b As Integer, ByVal c As Integer)
+    Sub ColorReachedCB(ByVal sender As BrickletColor, ByVal r As Integer, _
+                       ByVal g As Integer, ByVal b As Integer, ByVal c As Integer)
         Console.WriteLine("Color[R]: " + r.ToString())
         Console.WriteLine("Color[G]: " + g.ToString())
         Console.WriteLine("Color[B]: " + b.ToString())
