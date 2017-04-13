@@ -26,7 +26,7 @@ class Example
 		// Don't use device before ipcon is connected
 
 		// Register color callback to function ColorCB
-		c.Color += ColorCB;
+		c.ColorCallback += ColorCB;
 
 		// Set period for color callback to 1s (1000ms)
 		// Note: The color callback is only called every second

@@ -29,7 +29,7 @@ class Example
 		c.SetDebouncePeriod(10000);
 
 		// Register color reached callback to function ColorReachedCB
-		c.ColorReached += ColorReachedCB;
+		c.ColorReachedCallback += ColorReachedCB;
 
 		// Configure threshold for color "greater than 100, 200, 300, 400"
 		c.SetColorCallbackThreshold('>', 100, 0, 200, 0, 300, 0, 400, 0);
