@@ -10,7 +10,7 @@ tinkerforge call color-bricklet $uid set-debounce-period 10000
 tinkerforge dispatch color-bricklet $uid color-reached &
 
 # Configure threshold for color "greater than 100, 200, 300, 400"
-tinkerforge call color-bricklet $uid set-color-callback-threshold greater 100 0 200 0 300 0 400 0
+tinkerforge call color-bricklet $uid set-color-callback-threshold threshold-option-greater 100 0 200 0 300 0 400 0
 
 echo "Press key to exit"; read dummy
 
