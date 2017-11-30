@@ -27,7 +27,7 @@ Module ExampleThreshold
         c.SetDebouncePeriod(10000)
 
         ' Register color reached callback to subroutine ColorReachedCB
-        AddHandler c.ColorReached, AddressOf ColorReachedCB
+        AddHandler c.ColorReachedCallback, AddressOf ColorReachedCB
 
         ' Configure threshold for color "greater than 100, 200, 300, 400"
         c.SetColorCallbackThreshold(">"C, 100, 0, 200, 0, 300, 0, 400, 0)

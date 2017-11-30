@@ -22,7 +22,7 @@ ColorReachedCB[sender_,r_,g_,b_,c_]:=
   Print["Color[C]: "<>ToString[c]]
  ]
 
-AddEventHandler[c@ColorReached,ColorReachedCB]
+AddEventHandler[c@ColorReachedCallback,ColorReachedCB]
 
 (*Configure threshold for color "greater than 100, 200, 300, 400"*)
 option=Tinkerforge`BrickletColor`THRESHOLDUOPTIONUGREATER

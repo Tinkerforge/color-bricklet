@@ -19,7 +19,7 @@ ColorCB[sender_,r_,g_,b_,c_]:=
   Print["Color[C]: "<>ToString[c]]
  ]
 
-AddEventHandler[c@Color,ColorCB]
+AddEventHandler[c@ColorCallback,ColorCB]
 
 (*Set period for color callback to 1s (1000ms)*)
 (*Note: The color callback is only called every second*)

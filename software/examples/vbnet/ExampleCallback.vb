@@ -24,7 +24,7 @@ Module ExampleCallback
         ' Don't use device before ipcon is connected
 
         ' Register color callback to subroutine ColorCB
-        AddHandler c.Color, AddressOf ColorCB
+        AddHandler c.ColorCallback, AddressOf ColorCB
 
         ' Set period for color callback to 1s (1000ms)
         ' Note: The color callback is only called every second
