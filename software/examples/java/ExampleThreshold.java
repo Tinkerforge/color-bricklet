@@ -23,10 +23,10 @@ public class ExampleThreshold {
 		// Add color reached listener
 		c.addColorReachedListener(new BrickletColor.ColorReachedListener() {
 			public void colorReached(int r, int g, int b, int c) {
-				System.out.println("Color[R]: " + r);
-				System.out.println("Color[G]: " + g);
-				System.out.println("Color[B]: " + b);
-				System.out.println("Color[C]: " + c);
+				System.out.println("Color [R]: " + r);
+				System.out.println("Color [G]: " + g);
+				System.out.println("Color [B]: " + b);
+				System.out.println("Color [C]: " + c);
 				System.out.println("");
 			}
 		});

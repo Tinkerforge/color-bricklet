@@ -13,10 +13,10 @@ const UID = 'XYZ'; // Change XYZ to the UID of your Color Bricklet
 // Callback function for color reached callback
 function cb_colorReached($r, $g, $b, $c)
 {
-    echo "Color[R]: $r\n";
-    echo "Color[G]: $g\n";
-    echo "Color[B]: $b\n";
-    echo "Color[C]: $c\n";
+    echo "Color [R]: $r\n";
+    echo "Color [G]: $g\n";
+    echo "Color [B]: $b\n";
+    echo "Color [C]: $c\n";
     echo "\n";
 }
 

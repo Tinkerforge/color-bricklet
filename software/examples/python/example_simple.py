@@ -18,10 +18,10 @@ if __name__ == "__main__":
     # Get current color
     r, g, b, c_ = c.get_color()
 
-    print("Color[R]: " + str(r))
-    print("Color[G]: " + str(g))
-    print("Color[B]: " + str(b))
-    print("Color[C]: " + str(c_))
+    print("Color [R]: " + str(r))
+    print("Color [G]: " + str(g))
+    print("Color [B]: " + str(b))
+    print("Color [C]: " + str(c_))
 
     raw_input("Press key to exit\n") # Use input() in Python 3
     ipcon.disconnect()

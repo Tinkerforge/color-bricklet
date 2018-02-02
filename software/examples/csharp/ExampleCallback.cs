@@ -10,10 +10,10 @@ class Example
 	// Callback function for color callback
 	static void ColorCB(BrickletColor sender, int r, int g, int b, int c)
 	{
-		Console.WriteLine("Color[R]: " + r);
-		Console.WriteLine("Color[G]: " + g);
-		Console.WriteLine("Color[B]: " + b);
-		Console.WriteLine("Color[C]: " + c);
+		Console.WriteLine("Color [R]: " + r);
+		Console.WriteLine("Color [G]: " + g);
+		Console.WriteLine("Color [B]: " + b);
+		Console.WriteLine("Color [C]: " + c);
 		Console.WriteLine("");
 	}
 

@@ -15,10 +15,10 @@ function matlab_example_simple()
     % Get current color
     color = c.getColor();
 
-    fprintf('Color[R]: %i\n', color.r);
-    fprintf('Color[G]: %i\n', color.g);
-    fprintf('Color[B]: %i\n', color.b);
-    fprintf('Color[C]: %i\n', color.c);
+    fprintf('Color [R]: %i\n', color.r);
+    fprintf('Color [G]: %i\n', color.g);
+    fprintf('Color [B]: %i\n', color.b);
+    fprintf('Color [C]: %i\n', color.c);
 
     input('Press key to exit\n', 's');
     ipcon.disconnect();

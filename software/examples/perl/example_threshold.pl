@@ -12,10 +12,10 @@ sub cb_color_reached
 {
     my ($r, $g, $b, $c) = @_;
 
-    print "Color[R]: $r\n";
-    print "Color[G]: $g\n";
-    print "Color[B]: $b\n";
-    print "Color[C]: $c\n";
+    print "Color [R]: $r\n";
+    print "Color [G]: $g\n";
+    print "Color [B]: $b\n";
+    print "Color [C]: $c\n";
     print "\n";
 }
 

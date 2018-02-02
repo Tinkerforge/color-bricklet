@@ -53,10 +53,10 @@
                 c.on(Tinkerforge.BrickletColor.CALLBACK_COLOR_REACHED,
                     // Callback function for color reached callback
                     function (r, g, b, c) {
-                        textArea.value += 'Color[R]: ' + r + '\n';
-                        textArea.value += 'Color[G]: ' + g + '\n';
-                        textArea.value += 'Color[B]: ' + b + '\n';
-                        textArea.value += 'Color[C]: ' + c + '\n';
+                        textArea.value += 'Color [R]: ' + r + '\n';
+                        textArea.value += 'Color [G]: ' + g + '\n';
+                        textArea.value += 'Color [B]: ' + b + '\n';
+                        textArea.value += 'Color [C]: ' + c + '\n';
                         textArea.value += '\n';
                         textArea.scrollTop = textArea.scrollHeight;
                     }

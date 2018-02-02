@@ -14,17 +14,14 @@ Module ExampleSimple
         ' Don't use device before ipcon is connected
 
         ' Get current color
-        Dim r As Integer
-        Dim g As Integer
-        Dim b As Integer
-        Dim c_ As Integer
+        Dim r, g, b, c_ As Integer
 
         c.GetColor(r, g, b, c_)
 
-        Console.WriteLine("Color[R]: " + r.ToString())
-        Console.WriteLine("Color[G]: " + g.ToString())
-        Console.WriteLine("Color[B]: " + b.ToString())
-        Console.WriteLine("Color[C]: " + c_.ToString())
+        Console.WriteLine("Color [R]: " + r.ToString())
+        Console.WriteLine("Color [G]: " + g.ToString())
+        Console.WriteLine("Color [B]: " + b.ToString())
+        Console.WriteLine("Color [C]: " + c_.ToString())
 
         Console.WriteLine("Press key to exit")
         Console.ReadLine()

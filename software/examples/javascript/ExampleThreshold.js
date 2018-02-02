@@ -28,10 +28,10 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
 c.on(Tinkerforge.BrickletColor.CALLBACK_COLOR_REACHED,
     // Callback function for color reached callback
     function (r, g, b, c) {
-        console.log('Color[R]: ' + r);
-        console.log('Color[G]: ' + g);
-        console.log('Color[B]: ' + b);
-        console.log('Color[C]: ' + c);
+        console.log('Color [R]: ' + r);
+        console.log('Color [G]: ' + g);
+        console.log('Color [B]: ' + b);
+        console.log('Color [C]: ' + c);
         console.log();
     }
 );

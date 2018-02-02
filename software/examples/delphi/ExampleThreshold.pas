@@ -29,10 +29,10 @@ var
 procedure TExample.ColorReachedCB(sender: TBrickletColor; const r: word; const g: word;
                                   const b: word; const c_: word);
 begin
-  WriteLn(Format('Color[R]: %d', [r]));
-  WriteLn(Format('Color[G]: %d', [g]));
-  WriteLn(Format('Color[B]: %d', [b]));
-  WriteLn(Format('Color[C]: %d', [c_]));
+  WriteLn(Format('Color [R]: %d', [r]));
+  WriteLn(Format('Color [G]: %d', [g]));
+  WriteLn(Format('Color [B]: %d', [b]));
+  WriteLn(Format('Color [C]: %d', [c_]));
   WriteLn('');
 end;
 

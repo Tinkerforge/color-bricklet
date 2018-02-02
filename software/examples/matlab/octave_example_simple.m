@@ -14,10 +14,10 @@ function octave_example_simple()
     % Get current color
     color = c.getColor();
 
-    fprintf("Color[R]: %d\n", color.r);
-    fprintf("Color[G]: %d\n", color.g);
-    fprintf("Color[B]: %d\n", color.b);
-    fprintf("Color[C]: %d\n", color.c);
+    fprintf("Color [R]: %d\n", color.r);
+    fprintf("Color [G]: %d\n", color.g);
+    fprintf("Color [B]: %d\n", color.b);
+    fprintf("Color [C]: %d\n", color.c);
 
     input("Press key to exit\n", "s");
     ipcon.disconnect();

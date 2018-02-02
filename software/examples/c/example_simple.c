@@ -30,10 +30,10 @@ int main(void) {
 		return 1;
 	}
 
-	printf("Color[R]: %d\n", r);
-	printf("Color[G]: %d\n", g);
-	printf("Color[B]: %d\n", b);
-	printf("Color[C]: %d\n", c_);
+	printf("Color [R]: %u\n", r);
+	printf("Color [G]: %u\n", g);
+	printf("Color [B]: %u\n", b);
+	printf("Color [C]: %u\n", c_);
 
 	printf("Press key to exit\n");
 	getchar();

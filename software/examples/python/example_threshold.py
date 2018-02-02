@@ -10,10 +10,10 @@ from tinkerforge.bricklet_color import BrickletColor
 
 # Callback function for color reached callback
 def cb_color_reached(r, g, b, c):
-    print("Color[R]: " + str(r))
-    print("Color[G]: " + str(g))
-    print("Color[B]: " + str(b))
-    print("Color[C]: " + str(c))
+    print("Color [R]: " + str(r))
+    print("Color [G]: " + str(g))
+    print("Color [B]: " + str(b))
+    print("Color [C]: " + str(c))
     print("")
 
 if __name__ == "__main__":

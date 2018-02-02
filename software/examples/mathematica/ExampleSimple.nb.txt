@@ -15,10 +15,10 @@ r=0;g=0;b=0;cU=0
 (*Get current color*)
 c@GetColor[r,g,b,cU]
 
-Print["Color[R]: "<>ToString[r]]
-Print["Color[G]: "<>ToString[g]]
-Print["Color[B]: "<>ToString[b]]
-Print["Color[C]: "<>ToString[cU]]
+Print["Color [R]: "<>ToString[r]]
+Print["Color [G]: "<>ToString[g]]
+Print["Color [B]: "<>ToString[b]]
+Print["Color [C]: "<>ToString[cU]]
 
 (*Clean up*)
 ipcon@Disconnect[]

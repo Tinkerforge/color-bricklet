@@ -11,10 +11,10 @@
 void cb_color_reached(uint16_t r, uint16_t g, uint16_t b, uint16_t c, void *user_data) {
 	(void)user_data; // avoid unused parameter warning
 
-	printf("Color[R]: %d\n", r);
-	printf("Color[G]: %d\n", g);
-	printf("Color[B]: %d\n", b);
-	printf("Color[C]: %d\n", c);
+	printf("Color [R]: %u\n", r);
+	printf("Color [G]: %u\n", g);
+	printf("Color [B]: %u\n", b);
+	printf("Color [C]: %u\n", c);
 	printf("\n");
 }
 

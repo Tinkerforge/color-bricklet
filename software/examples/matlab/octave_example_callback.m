@@ -25,9 +25,9 @@ end
 
 % Callback function for color callback
 function cb_color(e)
-    fprintf("Color[R]: %d\n", e.r);
-    fprintf("Color[G]: %d\n", e.g);
-    fprintf("Color[B]: %d\n", e.b);
-    fprintf("Color[C]: %d\n", e.c);
+    fprintf("Color [R]: %d\n", e.r);
+    fprintf("Color [G]: %d\n", e.g);
+    fprintf("Color [B]: %d\n", e.b);
+    fprintf("Color [C]: %d\n", e.c);
     fprintf("\n");
 end

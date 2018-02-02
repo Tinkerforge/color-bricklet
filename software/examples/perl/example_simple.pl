@@ -16,10 +16,10 @@ $ipcon->connect(&HOST, &PORT); # Connect to brickd
 # Get current color
 my ($r, $g, $b, $c_) = $c->get_color();
 
-print "Color[R]: $r\n";
-print "Color[G]: $g\n";
-print "Color[B]: $b\n";
-print "Color[C]: $c_\n";
+print "Color [R]: $r\n";
+print "Color [G]: $g\n";
+print "Color [B]: $b\n";
+print "Color [C]: $c_\n";
 
 print "Press key to exit\n";
 <STDIN>;

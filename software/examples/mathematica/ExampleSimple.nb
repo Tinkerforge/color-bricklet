@@ -25,10 +25,10 @@ Notebook[{
    RowBox[{"c", "@", RowBox[{"GetColor", "[", RowBox[{"r", ",", "g", ",", "b", ",", "cU"}], "]"}]}],
    RowBox[{"
 "}],
-   RowBox[{"Print", "[", RowBox[{"\"\<Color[R]: \>\"", "<>", RowBox[{"ToString", "[", "r", "]"}]}], "]"}],
-   RowBox[{"Print", "[", RowBox[{"\"\<Color[G]: \>\"", "<>", RowBox[{"ToString", "[", "g", "]"}]}], "]"}],
-   RowBox[{"Print", "[", RowBox[{"\"\<Color[B]: \>\"", "<>", RowBox[{"ToString", "[", "b", "]"}]}], "]"}],
-   RowBox[{"Print", "[", RowBox[{"\"\<Color[C]: \>\"", "<>", RowBox[{"ToString", "[", "cU", "]"}]}], "]"}],
+   RowBox[{"Print", "[", RowBox[{"\"\<Color [R]: \>\"", "<>", RowBox[{"ToString", "[", "r", "]"}]}], "]"}],
+   RowBox[{"Print", "[", RowBox[{"\"\<Color [G]: \>\"", "<>", RowBox[{"ToString", "[", "g", "]"}]}], "]"}],
+   RowBox[{"Print", "[", RowBox[{"\"\<Color [B]: \>\"", "<>", RowBox[{"ToString", "[", "b", "]"}]}], "]"}],
+   RowBox[{"Print", "[", RowBox[{"\"\<Color [C]: \>\"", "<>", RowBox[{"ToString", "[", "cU", "]"}]}], "]"}],
    RowBox[{"
 "}],
    RowBox[{"(*", "Clean up", "*)"}],

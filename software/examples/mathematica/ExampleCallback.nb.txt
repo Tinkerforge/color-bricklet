@@ -13,10 +13,10 @@ ipcon@Connect[host,port]
 (*Callback function for color callback*)
 ColorCB[sender_,r_,g_,b_,c_]:=
  Module[{},
-  Print["Color[R]: "<>ToString[r]];
-  Print["Color[G]: "<>ToString[g]];
-  Print["Color[B]: "<>ToString[b]];
-  Print["Color[C]: "<>ToString[c]]
+  Print["Color [R]: "<>ToString[r]];
+  Print["Color [G]: "<>ToString[g]];
+  Print["Color [B]: "<>ToString[b]];
+  Print["Color [C]: "<>ToString[c]]
  ]
 
 AddEventHandler[c@ColorCallback,ColorCB]

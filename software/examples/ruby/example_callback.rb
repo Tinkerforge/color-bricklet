@@ -18,10 +18,10 @@ ipcon.connect HOST, PORT # Connect to brickd
 
 # Register color callback
 c.register_callback(BrickletColor::CALLBACK_COLOR) do |r, g, b, c_|
-  puts "Color[R]: #{r}"
-  puts "Color[G]: #{g}"
-  puts "Color[B]: #{b}"
-  puts "Color[C]: #{c_}"
+  puts "Color [R]: #{r}"
+  puts "Color [G]: #{g}"
+  puts "Color [B]: #{b}"
+  puts "Color [C]: #{c_}"
   puts ''
 end
 

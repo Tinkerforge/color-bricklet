@@ -27,9 +27,9 @@ end
 
 % Callback function for color reached callback
 function cb_color_reached(e)
-    fprintf('Color[R]: %i\n', e.r);
-    fprintf('Color[G]: %i\n', e.g);
-    fprintf('Color[B]: %i\n', e.b);
-    fprintf('Color[C]: %i\n', e.c);
+    fprintf('Color [R]: %i\n', e.r);
+    fprintf('Color [G]: %i\n', e.g);
+    fprintf('Color [B]: %i\n', e.b);
+    fprintf('Color [C]: %i\n', e.c);
     fprintf('\n');
 end

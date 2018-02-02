@@ -21,10 +21,10 @@ c.set_debounce_period 10000
 
 # Register color reached callback
 c.register_callback(BrickletColor::CALLBACK_COLOR_REACHED) do |r, g, b, c_|
-  puts "Color[R]: #{r}"
-  puts "Color[G]: #{g}"
-  puts "Color[B]: #{b}"
-  puts "Color[C]: #{c_}"
+  puts "Color [R]: #{r}"
+  puts "Color [G]: #{g}"
+  puts "Color [B]: #{b}"
+  puts "Color [C]: #{c_}"
   puts ''
 end
 

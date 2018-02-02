@@ -9,10 +9,10 @@ Module ExampleThreshold
     ' Callback subroutine for color reached callback
     Sub ColorReachedCB(ByVal sender As BrickletColor, ByVal r As Integer, _
                        ByVal g As Integer, ByVal b As Integer, ByVal c As Integer)
-        Console.WriteLine("Color[R]: " + r.ToString())
-        Console.WriteLine("Color[G]: " + g.ToString())
-        Console.WriteLine("Color[B]: " + b.ToString())
-        Console.WriteLine("Color[C]: " + c.ToString())
+        Console.WriteLine("Color [R]: " + r.ToString())
+        Console.WriteLine("Color [G]: " + g.ToString())
+        Console.WriteLine("Color [B]: " + b.ToString())
+        Console.WriteLine("Color [C]: " + c.ToString())
         Console.WriteLine("")
     End Sub
 

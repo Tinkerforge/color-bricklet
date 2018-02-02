@@ -9,10 +9,10 @@ Module ExampleCallback
     ' Callback subroutine for color callback
     Sub ColorCB(ByVal sender As BrickletColor, ByVal r As Integer, ByVal g As Integer, _
                 ByVal b As Integer, ByVal c As Integer)
-        Console.WriteLine("Color[R]: " + r.ToString())
-        Console.WriteLine("Color[G]: " + g.ToString())
-        Console.WriteLine("Color[B]: " + b.ToString())
-        Console.WriteLine("Color[C]: " + c.ToString())
+        Console.WriteLine("Color [R]: " + r.ToString())
+        Console.WriteLine("Color [G]: " + g.ToString())
+        Console.WriteLine("Color [B]: " + b.ToString())
+        Console.WriteLine("Color [C]: " + c.ToString())
         Console.WriteLine("")
     End Sub
 

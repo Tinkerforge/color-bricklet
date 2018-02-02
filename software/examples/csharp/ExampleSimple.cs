@@ -19,10 +19,10 @@ class Example
 		int r, g, b, c_;
 		c.GetColor(out r, out g, out b, out c_);
 
-		Console.WriteLine("Color[R]: " + r);
-		Console.WriteLine("Color[G]: " + g);
-		Console.WriteLine("Color[B]: " + b);
-		Console.WriteLine("Color[C]: " + c_);
+		Console.WriteLine("Color [R]: " + r);
+		Console.WriteLine("Color [G]: " + g);
+		Console.WriteLine("Color [B]: " + b);
+		Console.WriteLine("Color [C]: " + c_);
 
 		Console.WriteLine("Press enter to exit");
 		Console.ReadLine();
