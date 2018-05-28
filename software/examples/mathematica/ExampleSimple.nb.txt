@@ -10,9 +10,8 @@ ipcon=NETNew["Tinkerforge.IPConnection"]
 c=NETNew["Tinkerforge.BrickletColor",uid,ipcon]
 ipcon@Connect[host,port]
 
-r=0;g=0;b=0;cU=0
-
 (*Get current color*)
+r=0;g=0;b=0;cU=0
 c@GetColor[r,g,b,cU]
 
 Print["Color [R]: "<>ToString[r]]
