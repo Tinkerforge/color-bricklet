@@ -1,35 +1,36 @@
 use std::{error::Error, io, thread};
-use tinkerforge::{color_bricklet::*, ipconnection::IpConnection};
+use tinkerforge::{color_bricklet::*, ip_connection::IpConnection};
 
-const HOST: &str = "127.0.0.1";
+const HOST: &str = "localhost";
 const PORT: u16 = 4223;
-const UID: &str = "XYZ"; // Change XYZ to the UID of your Color Bricklet
+const UID: &str = "XYZ"; // Change XYZ to the UID of your Color Bricklet.
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let ipcon = IpConnection::new(); // Create IP connection
-    let color_bricklet = ColorBricklet::new(UID, &ipcon); // Create device object
+    let ipcon = IpConnection::new(); // Create IP connection.
+    let c = ColorBricklet::new(UID, &ipcon); // Create device object.
 
-    ipcon.connect(HOST, PORT).recv()??; // Connect to brickd
-                                        // Don't use device before ipcon is connected
+    ipcon.connect((HOST, PORT)).recv()??; // Connect to brickd.
+                                          // Don't use device before ipcon is connected.
 
-    //Create listener for color events.
-    let color_listener = color_bricklet.get_color_receiver();
-    // Spawn thread to handle received events. This thread ends when the color_bricklet
+    // Create receiver for color events.
+    let color_receiver = c.get_color_receiver();
+
+    // Spawn thread to handle received events. This thread ends when the `c` object
     // is dropped, so there is no need for manual cleanup.
     thread::spawn(move || {
-        for event in color_listener {
-            println!("Color [R]: {}", event.r);
-            println!("Color [G]: {}", event.g);
-            println!("Color [B]: {}", event.b);
-            println!("Color [C]: {}", event.c);
+        for color in color_receiver {
+            println!("Color [R]: {}", color.r);
+            println!("Color [G]: {}", color.g);
+            println!("Color [B]: {}", color.b);
+            println!("Color [C]: {}", color.c);
             println!();
         }
     });
 
-    // Set period for color listener to 1s (1000ms)
+    // Set period for color receiver to 1s (1000ms).
     // Note: The color callback is only called every second
     //       if the color has changed since the last call!
-    color_bricklet.set_color_callback_period(1000);
+    c.set_color_callback_period(1000);
 
     println!("Press enter to exit.");
     let mut _input = String::new();
