@@ -12,10 +12,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     ipcon.connect((HOST, PORT)).recv()??; // Connect to brickd.
                                           // Don't use device before ipcon is connected.
 
-    // Create receiver for color events.
-    let color_receiver = c.get_color_receiver();
+    let color_receiver = c.get_color_callback_receiver();
 
-    // Spawn thread to handle received events. This thread ends when the `c` object
+    // Spawn thread to handle received callback messages.
+    // This thread ends when the `c` object
     // is dropped, so there is no need for manual cleanup.
     thread::spawn(move || {
         for color in color_receiver {
