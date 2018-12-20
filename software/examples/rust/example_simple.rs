@@ -14,12 +14,12 @@ fn main() -> Result<(), Box<dyn Error>> {
                                           // Don't use device before ipcon is connected.
 
     // Get current color.
-    let get_color_result = c.get_color().recv()?;
+    let color = c.get_color().recv()?;
 
-    println!("Color [R]: {}", get_color_result.r);
-    println!("Color [G]: {}", get_color_result.g);
-    println!("Color [B]: {}", get_color_result.b);
-    println!("Color [C]: {}", get_color_result.c);
+    println!("Color [R]: {}", color.r);
+    println!("Color [G]: {}", color.g);
+    println!("Color [B]: {}", color.b);
+    println!("Color [C]: {}", color.c);
 
     println!("Press enter to exit.");
     let mut _input = String::new();
