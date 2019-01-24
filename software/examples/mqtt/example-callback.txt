@@ -1,0 +1,12 @@
+
+
+# Change XYZ to the UID of your Color Bricklet
+
+setup:
+	# Handle incoming color callbacks
+	subscribe to tinkerforge/callback/color_bricklet/XYZ/color
+	publish '{"register": true}' to tinkerforge/register/color_bricklet/XYZ/color # Register color callback
+	# Set period for color callback to 1s (1000ms)
+	# Note: The color callback is only called every second
+	#       if the color has changed since the last call!
+	publish '{"period": 1000}' to tinkerforge/request/color_bricklet/XYZ/set_color_callback_period
