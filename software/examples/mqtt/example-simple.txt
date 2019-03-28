@@ -3,4 +3,4 @@
 setup:
 	# Get current color
 	subscribe to tinkerforge/response/color_bricklet/XYZ/get_color
-	publish '' to tinkerforge/request/color_bricklet/XYZ/get_color 
+	publish '' to tinkerforge/request/color_bricklet/XYZ/get_color
