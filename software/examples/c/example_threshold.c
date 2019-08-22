@@ -40,7 +40,7 @@ int main(void) {
 	// Register color reached callback to function cb_color_reached
 	color_register_callback(&c,
 	                        COLOR_CALLBACK_COLOR_REACHED,
-	                        (void *)cb_color_reached,
+	                        (void (*)(void))cb_color_reached,
 	                        NULL);
 
 	// Configure threshold for color "greater than 100, 200, 300, 400"
