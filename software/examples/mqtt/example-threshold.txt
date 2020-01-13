@@ -3,10 +3,10 @@
 setup:
 	# Get threshold callbacks with a debounce time of 10 seconds (10000ms)
 	publish '{"debounce": 10000}' to tinkerforge/request/color_bricklet/XYZ/set_debounce_period
-	
+
 	# Handle incoming color reached callbacks
 	subscribe to tinkerforge/callback/color_bricklet/XYZ/color_reached
 	publish '{"register": true}' to tinkerforge/register/color_bricklet/XYZ/color_reached # Register color_reached callback
-	
+
 	# Configure threshold for color "greater than 100, 200, 300, 400"
 	publish '{"option": "greater", "min_r": 100, "max_r": 0, "min_g": 200, "max_g": 0, "min_b": 300, "max_b": 0, "min_c": 400, "max_c": 0}' to tinkerforge/request/color_bricklet/XYZ/set_color_callback_threshold
