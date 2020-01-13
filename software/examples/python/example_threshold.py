@@ -32,5 +32,5 @@ if __name__ == "__main__":
     # Configure threshold for color "greater than 100, 200, 300, 400"
     c.set_color_callback_threshold(">", 100, 0, 200, 0, 300, 0, 400, 0)
 
-    raw_input("Press key to exit\n") # Use input() in Python 3
+    input("Press key to exit\n") # Use raw_input() in Python 2
     ipcon.disconnect()
